@@ -1,0 +1,2 @@
+# Unified patches preserve a leading space on empty context lines.
+conformance/reference-patches/*.patch whitespace=-blank-at-eol

@@ -1,0 +1,11 @@
+[package]
+name = "peios-go-rust-oracle"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+[workspace]
+
+[dependencies]
+peios = { path = "../../../peios-rs/peios" }
+libc = "=0.2.190"
