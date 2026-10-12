@@ -311,8 +311,10 @@ func parseTextACE(s string) (ACE, error) {
 	return a, nil
 }
 
-// SDDL formats a descriptor without dropping entries or payloads. NULL ACLs
-// are explicit NO_ACCESS_CONTROL sections, retaining their control flags.
+// SDDL formats a descriptor without dropping entries or payloads. A NULL ACL
+// is omitted unless it carries P/AR/AI flags, which it keeps as e.g.
+// D:PNO_ACCESS_CONTROL; a descriptor with nothing else to show is written
+// D:NO_ACCESS_CONTROL.
 func (d Descriptor) SDDL() (string, error) {
 	if _, e := d.MarshalBinary(); e != nil {
 		return "", e
@@ -325,20 +327,20 @@ func (d Descriptor) SDDL() (string, error) {
 		b.WriteString("G:" + formatTrustee(d.Group))
 	}
 	for i, a := range []*ACL{d.DACL, d.SACL} {
-		if i == 0 {
-			b.WriteString("D:")
-		} else {
-			b.WriteString("S:")
-		}
+		flags := ""
 		if d.Control&(0x1000<<i) != 0 {
-			b.WriteByte('P')
+			flags += "P"
 		}
 		if d.Control&(0x100<<i) != 0 {
-			b.WriteString("AR")
+			flags += "AR"
 		}
 		if d.Control&(0x400<<i) != 0 {
-			b.WriteString("AI")
+			flags += "AI"
 		}
+		if a == nil && flags == "" {
+			continue
+		}
+		b.WriteString([]string{"D:", "S:"}[i] + flags)
 		if a == nil {
 			b.WriteString("NO_ACCESS_CONTROL")
 			continue
@@ -350,6 +352,10 @@ func (d Descriptor) SDDL() (string, error) {
 			}
 			b.WriteString(s)
 		}
+	}
+	if b.Len() == 0 {
+		// SDDL has no empty string; this is the NULL DACL it describes.
+		b.WriteString("D:NO_ACCESS_CONTROL")
 	}
 	return b.String(), nil
 }
