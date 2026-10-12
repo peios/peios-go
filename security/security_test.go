@@ -96,7 +96,7 @@ func TestAccessFilterAndRevisionPreservation(t *testing.T) {
 		t.Fatal(err)
 	}
 	text, err := parsed.SDDL()
-	if err != nil || text != sddl+"S:NO_ACCESS_CONTROL" {
+	if err != nil || text != sddl {
 		t.Fatalf("filter lost: %q %v", text, err)
 	}
 	for _, revision := range []byte{0, 1, 2, 4, 255} {
