@@ -153,17 +153,18 @@ func ParseSDDL(s string) (Descriptor, error) {
 			}
 			d.Control |= c
 			if p.kind == 'D' {
-				d.DACL = &a
+				d.DACL = a
 			} else {
-				d.SACL = &a
+				d.SACL = a
 			}
 		}
 	}
 	return d, nil
 }
-func parseTextACL(s string, sacl bool) (ACL, Control, error) {
+func parseTextACL(s string, sacl bool) (*ACL, Control, error) {
 	var a ACL
 	var c Control
+	nullACL := false
 	shift := uint(0)
 	if sacl {
 		shift = 1
@@ -171,6 +172,13 @@ func parseTextACL(s string, sacl bool) (ACL, Control, error) {
 	for len(s) > 0 && s[0] != '(' {
 		u := strings.ToUpper(s)
 		switch {
+		case strings.HasPrefix(u, "NO_ACCESS_CONTROL"):
+			if nullACL {
+				return nil, c, invalid("duplicate NULL ACL marker")
+			}
+			nullACL = true
+			s = s[len("NO_ACCESS_CONTROL"):]
+
 		case strings.HasPrefix(u, "AR"):
 			c |= 0x100 << shift
 			s = s[2:]
@@ -181,22 +189,33 @@ func parseTextACL(s string, sacl bool) (ACL, Control, error) {
 			c |= 0x1000 << shift
 			s = s[1:]
 		default:
-			return a, c, invalid("ACL flags")
+			return nil, c, invalid("ACL flags")
 		}
+	}
+	if nullACL {
+		if len(s) != 0 {
+			return nil, c, invalid("NULL ACL with ACEs")
+		}
+		return nil, c, nil
+	}
+	if sacl {
+		c |= SACLPresent
+	} else {
+		c |= DACLPresent
 	}
 	for len(s) > 0 {
 		body, rest, e := paren(s)
 		if e != nil {
-			return a, c, e
+			return nil, c, e
 		}
 		ace, e := parseTextACE(body)
 		if e != nil {
-			return a, c, e
+			return nil, c, e
 		}
 		a.ACEs = append(a.ACEs, ace)
 		s = rest
 	}
-	return a, c, nil
+	return &a, c, nil
 }
 func paren(s string) (string, string, error) {
 	if len(s) == 0 || s[0] != '(' {
@@ -292,7 +311,8 @@ func parseTextACE(s string) (ACE, error) {
 	return a, nil
 }
 
-// SDDL formats a descriptor without dropping entries or payloads.
+// SDDL formats a descriptor without dropping entries or payloads. NULL ACLs
+// are explicit NO_ACCESS_CONTROL sections, retaining their control flags.
 func (d Descriptor) SDDL() (string, error) {
 	if _, e := d.MarshalBinary(); e != nil {
 		return "", e
@@ -305,9 +325,6 @@ func (d Descriptor) SDDL() (string, error) {
 		b.WriteString("G:" + formatTrustee(d.Group))
 	}
 	for i, a := range []*ACL{d.DACL, d.SACL} {
-		if a == nil {
-			continue
-		}
 		if i == 0 {
 			b.WriteString("D:")
 		} else {
@@ -321,6 +338,10 @@ func (d Descriptor) SDDL() (string, error) {
 		}
 		if d.Control&(0x400<<i) != 0 {
 			b.WriteString("AI")
+		}
+		if a == nil {
+			b.WriteString("NO_ACCESS_CONTROL")
+			continue
 		}
 		for _, ace := range a.ACEs {
 			s, e := formatTextACE(ace)

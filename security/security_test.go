@@ -42,7 +42,7 @@ func TestDescriptorAuthorityAndBounds(t *testing.T) {
 		t.Fatal("absent versus empty DACL")
 	}
 	if _, e := (Descriptor{Control: DACLPresent}).MarshalBinary(); e == nil {
-		t.Fatal("NULL DACL accepted")
+		t.Fatal("PRESENT DACL with no ACL accepted")
 	}
 	d, _ := ParseSDDL("O:SYG:BAD:(D;;GW;;;WD)(A;;GR;;;WD)")
 	good, e := d.MarshalBinary()
@@ -96,7 +96,7 @@ func TestAccessFilterAndRevisionPreservation(t *testing.T) {
 		t.Fatal(err)
 	}
 	text, err := parsed.SDDL()
-	if err != nil || text != sddl {
+	if err != nil || text != sddl+"S:NO_ACCESS_CONTROL" {
 		t.Fatalf("filter lost: %q %v", text, err)
 	}
 	for _, revision := range []byte{0, 1, 2, 4, 255} {
