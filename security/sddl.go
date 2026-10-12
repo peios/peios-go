@@ -17,6 +17,19 @@ func wordValueOf(table []wordValue, word string) (uint32, bool) {
 	return 0, false
 }
 func words(table []wordValue, s string, hexTail bool) (uint32, error) {
+	if hexTail && s != "" {
+		decimal := true
+		for i := 0; i < len(s); i++ {
+			decimal = decimal && s[i] >= '0' && s[i] <= '9'
+		}
+		if decimal {
+			n, err := strconv.ParseUint(s, 10, 32)
+			if err != nil {
+				return 0, invalid("decimal rights")
+			}
+			return uint32(n), nil
+		}
+	}
 	var v uint32
 	for len(s) > 0 {
 		if hexTail && len(s) >= 2 && strings.EqualFold(s[:2], "0x") {
@@ -67,8 +80,8 @@ func formatTrustee(s SID) string {
 	return v
 }
 
-// ParseSDDL parses the Peios SDDL vocabulary. Decimal rights and unresolved
-// domain-relative SID aliases are rejected, as in libpeios.
+// ParseSDDL parses the Peios SDDL vocabulary, including decimal rights.
+// Unresolved domain-relative SID aliases are rejected, as in libpeios.
 func ParseSDDL(s string) (Descriptor, error) {
 	var d Descriptor
 	if len(s) == 0 || !utf8.ValidString(s) || strings.ContainsRune(s, 0) {
