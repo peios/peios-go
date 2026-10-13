@@ -14,6 +14,12 @@ static void dump(const void *p, size_t n) {const unsigned char *b=p;for(size_t i
 static size_t unhex(const char *s,unsigned char *b){size_t n=strlen(s)/2;for(size_t i=0;i<n;i++){unsigned x=0;sscanf(s+2*i,"%2x",&x);b[i]=(unsigned char)x;}return n;}
 static int extra(const char *mode,char *arg){
  unsigned char b[131072];ssize_t n;
+ if (!strcmp(mode, "label-selector")) {
+  printf("%u %u %u\n", KACS_SECINFO_LABEL,
+         KACS_SECINFO_LABEL | KACS_SECINFO_OWNER,
+         KACS_SECINFO_LABEL | KACS_SECINFO_DACL);
+  return 1;
+ }
  if (!strcmp(mode, "native-guid")) {
   int fd = peios_token_open_self(0, KACS_TOKEN_QUERY);
   unsigned char guid[16], raw[16], untouched[16];
