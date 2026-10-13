@@ -8,7 +8,7 @@
     "process.h": "7a0be3e45096a697996e3eb9aacd78e390641a76b78eab7b51e9a3e06ab1a9ad",
     "registry.h": "aa16d8365260433e03d7cee5cf9bfdf42c241919dc67b6c79a114447acfda49e",
     "security.h": "3f3555d349d5fa3357f1cb9a8fa1c415a70fa2a9d93d2e4fb8a41c0e3355a529",
-    "token.h": "bb5f4b4200510a3e49ae515b79629be08d41e45b931c2a4887e51291292d2937"
+    "token.h": "bdb71cdd3f39ece5b261222db6806b840eca7bd0f0d6ce6b9e30d52da1b5b724"
   },
   "symbols": {
     "peios_access_check": {
