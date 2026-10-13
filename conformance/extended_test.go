@@ -167,3 +167,18 @@ func TestMessagePackAcceptance(t *testing.T) {
 		}
 	}
 }
+
+// The UAPI defines LABEL as bit 4; validate that contract independently of
+// the reference libraries, then compare their file and registry selectors.
+func TestLabelSelector(t *testing.T) {
+	got := fmt.Sprintf("%d %d %d", security.InfoLabel, security.InfoLabel|security.InfoOwner, security.InfoLabel|security.InfoDACL)
+	if got != "16 17 20" {
+		t.Fatalf("label selector ABI: got %q, want 16 17 20", got)
+	}
+	for _, driver := range references(t) {
+		out, err := exec.Command(driver, "label-selector", "").CombinedOutput()
+		if err != nil || strings.TrimSpace(string(out)) != got {
+			t.Fatalf("%s label selectors: %q (%v), want %q", driver, out, err, got)
+		}
+	}
+}

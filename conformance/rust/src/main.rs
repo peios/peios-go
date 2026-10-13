@@ -12,6 +12,23 @@ fn unhex(s: &str) -> Vec<u8> {
 }
 fn extra(mode: &str, arg: &str) -> bool {
     match mode {
+        "label-selector" => {
+            use peios::{file, registry};
+            let file = [
+                file::SecInfo::LABEL,
+                file::SecInfo::LABEL | file::SecInfo::OWNER,
+                file::SecInfo::LABEL | file::SecInfo::DACL,
+            ]
+            .map(|v| v.bits());
+            let registry = [
+                registry::SecInfo::LABEL,
+                registry::SecInfo::LABEL | registry::SecInfo::OWNER,
+                registry::SecInfo::LABEL | registry::SecInfo::DACL,
+            ]
+            .map(|v| v.bits());
+            assert_eq!(file, registry);
+            println!("{} {} {}", file[0], file[1], file[2]);
+        }
         "native-guid" => {
             use peios::token::{Token, TokenAccess, TokenClass};
             let token = Token::open_self(false, TokenAccess::QUERY).unwrap();
