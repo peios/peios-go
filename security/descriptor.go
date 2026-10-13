@@ -45,6 +45,9 @@ const (
 	InfoGroup         SecurityInformation = uapi.GROUP_SECURITY_INFORMATION
 	InfoDACL          SecurityInformation = uapi.DACL_SECURITY_INFORMATION
 	InfoSACL          SecurityInformation = uapi.SACL_SECURITY_INFORMATION
+	// InfoLabel selects the mandatory-integrity label without selecting the full SACL.
+	// It must not be combined with InfoSACL.
+	InfoLabel SecurityInformation = uapi.KACS_SECINFO_LABEL
 )
 
 type GenericMapping struct{ Read, Write, Execute, All AccessMask }
