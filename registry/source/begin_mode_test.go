@@ -3,9 +3,9 @@ package source
 
 import "testing"
 
-// TestDecodeBeginTransactionMode covers the RSI_BEGIN_TRANSACTION mode field
-// (PSD-005 §11.3): present modes decode, and an absent mode defaults to
-// read-write (tolerant decode for the source-agnostic begin path).
+// TestDecodeBeginTransactionMode covers the RSI_BEGIN_TRANSACTION payload
+// (PSPK §4.4): a u64 transaction id followed by a u32 mode. Both defined
+// modes decode and trailing bytes are tolerated.
 func TestDecodeBeginTransactionMode(t *testing.T) {
 	cases := []struct {
 		name     string
@@ -26,16 +26,16 @@ func TestDecodeBeginTransactionMode(t *testing.T) {
 			wantMode: TxnReadOnly,
 		},
 		{
-			name:     "mode absent defaults read-write",
-			build:    func(e *Encoder) { e.PutUint64(9) },
+			name:     "trailing bytes tolerated",
+			build:    func(e *Encoder) { e.PutUint64(9); e.PutUint32(TxnReadOnly); e.PutUint32(0xdead) },
 			wantTxn:  9,
-			wantMode: TxnReadWrite,
+			wantMode: TxnReadOnly,
 		},
 	}
 
 	for _, tc := range cases {
 		t.Run(tc.name, func(t *testing.T) {
-			e := NewEncoder(12)
+			e := NewEncoder(16)
 			tc.build(e)
 			r, err := DecodeBeginTransactionRequest(NewDecoder(e.Bytes()))
 			if err != nil {
@@ -48,5 +48,20 @@ func TestDecodeBeginTransactionMode(t *testing.T) {
 				t.Errorf("Mode = %d, want %d", r.Mode, tc.wantMode)
 			}
 		})
+	}
+}
+
+// TestDecodeBeginTransactionRejectsTruncation checks that a payload missing
+// all or part of the mode field fails to decode instead of selecting a
+// writable transaction.
+func TestDecodeBeginTransactionRejectsTruncation(t *testing.T) {
+	e := NewEncoder(12)
+	e.PutUint64(10)
+	e.PutUint32(TxnReadOnly)
+	full := e.Bytes()
+	for n := 0; n < len(full); n++ {
+		if _, err := DecodeBeginTransactionRequest(NewDecoder(full[:n])); err == nil {
+			t.Errorf("payload of %d bytes decoded; want an error", n)
+		}
 	}
 }

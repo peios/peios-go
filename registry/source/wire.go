@@ -206,8 +206,8 @@ func ReadRequestHeader(r io.Reader) (RequestHeader, []byte, error) {
 // operates on one fully-read message buffer, as delivered by the
 // message-oriented /dev/pkm_registry device where one read() returns
 // exactly one request. It validates that total_len frames the buffer
-// exactly; a mismatch is malformed framing (the caller tears down the
-// connection per PSD-005 §7.1).
+// exactly; a mismatch is malformed framing (PSPK §4.3), and the caller
+// tears down the connection.
 func ParseRequest(msg []byte) (RequestHeader, []byte, error) {
 	if len(msg) < RequestHeaderSize {
 		return RequestHeader{}, nil, fmt.Errorf("message %d bytes < minimum header size %d", len(msg), RequestHeaderSize)
