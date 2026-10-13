@@ -24,6 +24,11 @@ type LCSCredentials struct {
 
 // Spec is the portable token construction recipe. Zero scalar values are
 // encoded verbatim; the kernel validates policy and the caller's authority.
+// Choose Type and Level deliberately: a zero Level means Anonymous, not an
+// unspecified default. CreateToken accepts all four levels for Primary tokens.
+// A low primary level bounds peer captures and derivations without changing
+// the process's own identity. Older kernels reject primary levels below
+// Impersonation; Duplicate still requires that floor for primary results.
 type Spec struct {
 	User                                                                security.SID
 	Groups, DeviceGroups, RestrictedSIDs                                []Group
