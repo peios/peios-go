@@ -124,6 +124,21 @@ type TokenStatistics struct {
 	Expiration                  uint64
 }
 
+// GUID returns the immutable raw token GUID used in KMES event headers.
+// It requires Query access. A derived token has its own GUID.
+func (t *Token) GUID() ([16]byte, error) {
+	var guid [16]byte
+	b, err := t.Query(GUIDClass)
+	if err != nil {
+		return guid, err
+	}
+	if len(b) != len(guid) {
+		return guid, syscall.EPROTO
+	}
+	copy(guid[:], b)
+	return guid, nil
+}
+
 func (t *Token) Statistics() (TokenStatistics, error) {
 	b, e := t.Query(Statistics)
 	if e != nil {

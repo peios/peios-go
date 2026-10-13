@@ -14,6 +14,23 @@ static void dump(const void *p, size_t n) {const unsigned char *b=p;for(size_t i
 static size_t unhex(const char *s,unsigned char *b){size_t n=strlen(s)/2;for(size_t i=0;i<n;i++){unsigned x=0;sscanf(s+2*i,"%2x",&x);b[i]=(unsigned char)x;}return n;}
 static int extra(const char *mode,char *arg){
  unsigned char b[131072];ssize_t n;
+ if (!strcmp(mode, "native-guid")) {
+  int fd = peios_token_open_self(0, KACS_TOKEN_QUERY);
+  unsigned char guid[16], raw[16], untouched[16];
+  if (fd < 0 || peios_token_guid(fd, guid) != 0 ||
+      peios_token_query(fd, KACS_TOKEN_CLASS_GUID, raw, sizeof raw) != 16 ||
+      memcmp(guid, raw, sizeof guid) != 0) { puts("error"); return 1; }
+  close(fd);
+  memset(untouched, 0xa5, sizeof untouched);
+  memcpy(raw, untouched, sizeof raw);
+  if (peios_token_guid(-1, raw) != -1 || errno != EBADF ||
+      memcmp(raw, untouched, sizeof raw) != 0 ||
+      peios_token_guid(-1, NULL) != -1 || errno != EINVAL) { puts("error"); return 1; }
+  fd = peios_token_open_self(0, KACS_TOKEN_QUERY_SOURCE);
+  if (fd < 0 || peios_token_guid(fd, raw) != -1 || errno != EACCES ||
+      memcmp(raw, untouched, sizeof raw) != 0) { puts("error"); return 1; }
+  close(fd); puts("ok"); return 1;
+ }
 
 
 
