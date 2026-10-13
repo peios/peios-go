@@ -81,7 +81,9 @@ const (
 	TargetHidden uint8 = 1
 )
 
-// RSI_BEGIN_TRANSACTION mode (PSD-005 §7.2, §11.3).
+// RSI_BEGIN_TRANSACTION mode (PSPK §4.4). Any other value is an invalid
+// field: a source rejects the request with RSI_INVALID before recording
+// any transaction state.
 const (
 	TxnReadWrite uint32 = 0 // read-write: read-your-own-writes + atomic commit
 	TxnReadOnly  uint32 = 1 // point-in-time read-only snapshot (REG_IOC_BACKUP)
