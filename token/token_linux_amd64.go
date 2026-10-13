@@ -134,6 +134,10 @@ func (t *Token) Statistics() (TokenStatistics, error) {
 	}
 	return TokenStatistics{binary.LittleEndian.Uint64(b), binary.LittleEndian.Uint64(b[8:]), binary.LittleEndian.Uint64(b[16:]), Type(binary.LittleEndian.Uint32(b[24:])), binary.LittleEndian.Uint64(b[32:])}, nil
 }
+
+// Duplicate creates a token whose level must not exceed the source's level.
+// A Primary result must be at least Impersonation, even though privileged
+// minting can create primary tokens with lower derivation ceilings.
 func (t *Token) Duplicate(access Access, kind Type, level ImpersonationLevel) (out *Token, e error) {
 	e = native.WithFD(t, func(fd int) error {
 		a := uapi.Kacs_duplicate_args{Access_mask: uint32(access), Token_type: uint32(kind), Impersonation_level: uint32(level), Result_fd: -1}
