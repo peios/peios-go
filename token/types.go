@@ -26,6 +26,7 @@ const (
 	Groups              Class              = uapi.KACS_TOKEN_CLASS_GROUPS
 	Privileges          Class              = uapi.KACS_TOKEN_CLASS_PRIVILEGES
 	Statistics          Class              = uapi.KACS_TOKEN_CLASS_STATISTICS
+	GUIDClass           Class              = uapi.KACS_TOKEN_CLASS_GUID
 	DefaultDACL         Class              = uapi.KACS_TOKEN_CLASS_DEFAULT_DACL
 	Primary             Type               = uapi.KACS_TOKEN_TYPE_PRIMARY
 	Impersonation       Type               = uapi.KACS_TOKEN_TYPE_IMPERSONATION
