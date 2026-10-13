@@ -22,6 +22,32 @@ func nativeReferenceText(t *testing.T, mode, arg, want string) {
 		}
 	}
 }
+
+func TestTokenGUID(t *testing.T) {
+	guest(t)
+	tok, err := token.OpenSelf(0, token.Query)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer tok.Close()
+	guid, err := tok.GUID()
+	if err != nil || guid == [16]byte{} {
+		t.Fatalf("GUID: %x %v", guid, err)
+	}
+	raw, err := tok.Query(token.GUIDClass)
+	if err != nil || !bytes.Equal(raw, guid[:]) {
+		t.Fatalf("raw query: %x %v", raw, err)
+	}
+	denied, err := token.OpenSelf(0, token.QuerySource)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer denied.Close()
+	if _, err = denied.GUID(); err != syscall.EACCES {
+		t.Fatalf("query without right: %v", err)
+	}
+	nativeReferenceText(t, "native-guid", "", "ok")
+}
 func TestSysVDescriptors(t *testing.T) {
 	guest(t)
 	info := security.InfoOwner | security.InfoGroup | security.InfoDACL
