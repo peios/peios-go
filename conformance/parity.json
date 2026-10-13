@@ -8,7 +8,7 @@
     "process.h": "7a0be3e45096a697996e3eb9aacd78e390641a76b78eab7b51e9a3e06ab1a9ad",
     "registry.h": "aa16d8365260433e03d7cee5cf9bfdf42c241919dc67b6c79a114447acfda49e",
     "security.h": "3f3555d349d5fa3357f1cb9a8fa1c415a70fa2a9d93d2e4fb8a41c0e3355a529",
-    "token.h": "9e64d164ee80a67fd5cae725755aebf9f440056153ddede8f3209903a1c8f03e"
+    "token.h": "bdb71cdd3f39ece5b261222db6806b840eca7bd0f0d6ce6b9e30d52da1b5b724"
   },
   "symbols": {
     "peios_access_check": {
@@ -994,6 +994,11 @@
     "peios_token_get_linked": {
       "go": "token.Token.Linked",
       "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+      "header": "token.h"
+    },
+    "peios_token_guid": {
+      "go": "token.Token.GUID",
+      "note": "Returns the immutable 16 raw GUID bytes used by KMES.",
       "header": "token.h"
     },
     "peios_token_impersonate": {

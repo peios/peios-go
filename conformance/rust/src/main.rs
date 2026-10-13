@@ -12,6 +12,16 @@ fn unhex(s: &str) -> Vec<u8> {
 }
 fn extra(mode: &str, arg: &str) -> bool {
     match mode {
+        "native-guid" => {
+            use peios::token::{Token, TokenAccess, TokenClass};
+            let token = Token::open_self(false, TokenAccess::QUERY).unwrap();
+            let guid = token.guid().unwrap();
+            assert_eq!(token.query(TokenClass::GUID).unwrap(), guid);
+            assert_ne!(guid, [0; 16]);
+            let denied = Token::open_self(false, TokenAccess::QUERY_SOURCE).unwrap();
+            assert!(denied.guid().is_err());
+            println!("ok");
+        }
         "native-sysv" => {
             use peios::file::{SecInfo, SysvKind};
             let (k, id) = arg.split_once('|').unwrap();
