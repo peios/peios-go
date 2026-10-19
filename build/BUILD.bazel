@@ -1,0 +1,36 @@
+load("@rules_go//go:def.bzl", "nogo")
+
+package(default_visibility = ["//visibility:public"])
+
+exports_files(glob([
+    "*.bzl",
+    "*.patch",
+    "*.sha256",
+]))
+
+config_setting(
+    name = "native",
+    values = {"define": "peios_native=true"},
+)
+
+config_setting(
+    name = "packaged",
+    values = {"define": "peios_packaged=true"},
+)
+
+filegroup(
+    name = "sources",
+    srcs = glob([
+        "*.bzl",
+        "*.bazel",
+        "*.patch",
+        "*.sha256",
+    ]),
+)
+
+nogo(
+    name = "vet",
+    vet = True,
+)
+
+exports_files(["rust-sdk.BUILD.bazel"])

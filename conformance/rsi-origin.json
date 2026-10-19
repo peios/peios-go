@@ -1,16 +1,12 @@
 {
-  "repository": "github.com/peios/loregd",
-  "revision": "3cb9768b0586ab6563f3b3c50623998624926a8d",
-  "files": [
-    "internal/rsi/wire.go",
-    "internal/rsi/messages.go",
-    "internal/rsi/constants.go"
-  ],
-  "license": "MIT",
-  "adaptations": [
-    "public package registry/source",
-    "bounded response length and short-write detection",
-    "overflow-safe decoder bounds",
-    "native hosting implemented with pinned current UAPI arguments and cancellable Go I/O"
-  ]
+    "repository": "github.com/peios/loregd",
+    "revision": "3cb9768b0586ab6563f3b3c50623998624926a8d",
+    "files": ["internal/rsi/wire.go", "internal/rsi/messages.go", "internal/rsi/constants.go"],
+    "license": "MIT",
+    "adaptations": [
+        "public package registry/source",
+        "bounded response length and short-write detection",
+        "overflow-safe decoder bounds",
+        "native hosting implemented with pinned current UAPI arguments and cancellable Go I/O"
+    ]
 }

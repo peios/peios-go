@@ -1,0 +1,46 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+package(default_visibility = ["//visibility:public"])
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "constants.go",
+        "messages.go",
+        "source_linux_amd64.go",
+        "wire.go",
+    ],
+    importpath = "github.com/peios/peios-go/registry/source",
+    deps = [
+        "//internal/native:go_default_library",
+        "//internal/uapi:go_default_library",
+    ],
+)
+
+go_test(
+    name = "tests",
+    srcs = [
+        "begin_mode_test.go",
+        "lifecycle_linux_amd64_test.go",
+        "messages_test.go",
+        "wire_test.go",
+    ],
+    data = glob(
+        ["testdata/**"],
+        allow_empty = True,
+    ),
+    embed = [":go_default_library"],
+    tags = [],
+    deps = [],
+)
+
+filegroup(
+    name = "sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            "target/**",
+            "rust/target/**",
+        ],
+    ),
+)

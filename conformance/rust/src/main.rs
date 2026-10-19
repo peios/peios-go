@@ -166,7 +166,7 @@ fn extra(mode: &str, arg: &str) -> bool {
                                 v.sequence,
                                 u8::from(r.wait(pos, 0).unwrap())
                             );
-                            dump(v.payload);
+                            dump(&v.payload);
                         }
                     }
                 }

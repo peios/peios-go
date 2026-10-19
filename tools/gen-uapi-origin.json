@@ -1,0 +1,7 @@
+{
+    "repository": "https://github.com/peios/pkm",
+    "commit": "ac4c6eb57ff94821f1eaea2b3bde460777d48f5b",
+    "path": "uapi/generated/go/gen.sh",
+    "blob": "e4f53d0b2ad48c81c929db204e6d62d818009f53",
+    "changes": "Use the recorded kernel snapshot and an explicit check mode."
+}

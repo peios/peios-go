@@ -1,1110 +1,1110 @@
 {
-  "scope": "All functions and exported mapping objects in libpeios/include/peios/*.h; functional Go equivalents, not C ABI compatibility. Headers pinned by SHA-256.",
-  "headers_sha256": {
-    "access.h": "10d1c733d508d4a4df6cabe0f7457f457aaccac5ccdb4d4470b57960ffe55422",
-    "event.h": "f2727d054ba051af895d3a4e8bfde1f7b433acb8ca292a0d10a312a083086b36",
-    "file.h": "68300ad15bf5adeef422a6e714a9695107e6435925c2ae3e9f0cf72e76228602",
-    "msgpack.h": "ea4579f5a4809bc0b1b3b245c72e3614394c0320611942f9a98f6b0fd971abb9",
-    "process.h": "7a0be3e45096a697996e3eb9aacd78e390641a76b78eab7b51e9a3e06ab1a9ad",
-    "registry.h": "aa16d8365260433e03d7cee5cf9bfdf42c241919dc67b6c79a114447acfda49e",
-    "security.h": "3f3555d349d5fa3357f1cb9a8fa1c415a70fa2a9d93d2e4fb8a41c0e3355a529",
-    "token.h": "bdb71cdd3f39ece5b261222db6806b840eca7bd0f0d6ce6b9e30d52da1b5b724"
-  },
-  "symbols": {
-    "peios_access_check": {
-      "go": "access.Check",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "access.h"
-    },
-    "peios_access_check_list": {
-      "go": "access.CheckList",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "access.h"
-    },
-    "peios_access_map_generic": {
-      "go": "security.GenericMapping.Map",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_app_data": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_flags": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_inherited_object_type": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_mask": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_object_type": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_sid": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_ace_view_type": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_add": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_allow": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_audit": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_bytes": {
-      "go": "security.ACL.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_deny": {
-      "go": "security.ACE",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_error": {
-      "go": "security.ACL.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_finish": {
-      "go": "security.ACL.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_free": {
-      "go": "security.ACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_label": {
-      "go": "security.IntegritySID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_new": {
-      "go": "security.ACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_builder_reset": {
-      "go": "security.ACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_parse": {
-      "go": "security.ParseACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_view_ace": {
-      "go": "security.ACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_acl_view_count": {
-      "go": "security.ACL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_audit_context_encode": {
-      "go": "access.AuditContext",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "access.h"
-    },
-    "peios_audit_context_validate": {
-      "go": "access.ValidateAuditContext",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "access.h"
-    },
-    "peios_event_attach": {
-      "go": "event.AttachFile",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_emit": {
-      "go": "event.Emit",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_emit_batch": {
-      "go": "event.EmitBatch",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_policy_close": {
-      "go": "event.Policy",
-      "note": "Policy retains no resources: garbage collection suffices. Fresh resolution on each call replaces watch caching; same tier/deepest-Enabled policy with immediate updates.",
-      "header": "event.h"
-    },
-    "peios_event_policy_enabled": {
-      "go": "event.Policy.Enabled",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_policy_open": {
-      "go": "event.OpenPolicy",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_reader_close": {
-      "go": "event.Reader.Close",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_reader_lost": {
-      "go": "event.Reader.Lost",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_reader_next": {
-      "go": "event.Reader.Next",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_reader_open": {
-      "go": "event.Attach",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_reader_wait": {
-      "go": "event.Reader.Wait",
-      "note": "context deadlines/cancellation replace timeout milliseconds. Ring wait checks readiness before cancellation. Reader owns automatic resize recovery; Ring caller owns cursor/generation handling.",
-      "header": "event.h"
-    },
-    "peios_event_ring_capacity": {
-      "go": "event.Ring.Metadata",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_event_at": {
-      "go": "event.Ring.EventAt",
-      "note": "Owned event data instead of borrowed mmap pointers; EAGAIN on lapping/empty/change protects reads. Caller can drive any live byte cursor.",
-      "header": "event.h"
-    },
-    "peios_event_ring_generation": {
-      "go": "event.Ring.Metadata",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_map": {
-      "go": "event.MapRing",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_set_need_wake": {
-      "go": "event.Ring.SetNeedWake",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_tail_pos": {
-      "go": "event.Ring.Metadata",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_unmap": {
-      "go": "event.Ring.Close",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_ring_wait": {
-      "go": "event.Ring.Wait",
-      "note": "context deadlines/cancellation replace timeout milliseconds. Ring wait checks readiness before cancellation. Reader owns automatic resize recovery; Ring caller owns cursor/generation handling.",
-      "header": "event.h"
-    },
-    "peios_event_ring_write_pos": {
-      "go": "event.Ring.Metadata",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_event_slot_count": {
-      "go": "event.SlotCount",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "event.h"
-    },
-    "peios_fd_get_sd": {
-      "go": "file.GetDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_fd_set_sd": {
-      "go": "file.SetDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_file_generic_mapping": {
-      "go": "file.GenericMapping",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_file_get_sd": {
-      "go": "file.GetDescriptorAt",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_file_open": {
-      "go": "file.OpenAt",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_file_set_sd": {
-      "go": "file.SetDescriptorAt",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_logon_sessions_close": {
-      "go": "token.SessionReader.Close",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_logon_sessions_next": {
-      "go": "token.SessionReader.Next",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_logon_sessions_open": {
-      "go": "token.OpenSessions",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_mount_get_policy": {
-      "go": "file.GetMountPolicy",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_mount_set_policy": {
-      "go": "file.SetMountPolicy",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_mp_peek": {
-      "go": "msgpack.Reader.Peek",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_array": {
-      "go": "msgpack.Reader.Array",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_bin": {
-      "go": "msgpack.Reader.Binary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_bool": {
-      "go": "msgpack.Reader.Bool",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_ext": {
-      "go": "msgpack.Reader.Extension",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_float": {
-      "go": "msgpack.Reader.Float",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_int": {
-      "go": "msgpack.Reader.Int",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_map": {
-      "go": "msgpack.Reader.Map",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_nil": {
-      "go": "msgpack.Reader.Nil",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_str": {
-      "go": "msgpack.Reader.StringBytes",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_read_uint": {
-      "go": "msgpack.Reader.Uint",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_reader_init": {
-      "go": "msgpack.Reader.Reset",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_reader_remaining": {
-      "go": "msgpack.Reader.Remaining",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_skip": {
-      "go": "msgpack.Reader.Skip",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_validate": {
-      "go": "msgpack.Validate",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_array": {
-      "go": "msgpack.Writer.Array",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_bin": {
-      "go": "msgpack.Writer.Binary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_bool": {
-      "go": "msgpack.Writer.Bool",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_ext": {
-      "go": "msgpack.Writer.Extension",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_float": {
-      "go": "msgpack.Writer.Float",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_int": {
-      "go": "msgpack.Writer.Int",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_map": {
-      "go": "msgpack.Writer.Map",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_nil": {
-      "go": "msgpack.Writer.Nil",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_raw": {
-      "go": "msgpack.Writer.Raw",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_str": {
-      "go": "msgpack.Writer.String",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_write_uint": {
-      "go": "msgpack.Writer.Uint",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_writer_bytes": {
-      "go": "msgpack.Writer.Bytes",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_writer_error": {
-      "go": "msgpack.Writer.Err",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_writer_free": {
-      "go": "msgpack.Writer",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_writer_new": {
-      "go": "msgpack.Writer",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_mp_writer_reset": {
-      "go": "msgpack.Writer.Reset",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "msgpack.h"
-    },
-    "peios_process_generic_mapping": {
-      "go": "process.GenericMapping",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "process.h"
-    },
-    "peios_process_psb": {
-      "go": "process.ReadSecurityBlock",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "process.h"
-    },
-    "peios_process_set_mitigations": {
-      "go": "process.SetMitigations",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "process.h"
-    },
-    "peios_reg_backup": {
-      "go": "registry.Key.Backup",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_begin_transaction": {
-      "go": "registry.Begin",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_blanket_tombstone": {
-      "go": "registry.Key.BlanketTombstone",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_commit": {
-      "go": "registry.Transaction.Commit",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_create_key": {
-      "go": "registry.Key.Create",
-      "note": "registry.Create for absolute paths, Key.Create for relative paths; options retain access, flags, layer and transaction.",
-      "header": "registry.h"
-    },
-    "peios_reg_delete_key": {
-      "go": "registry.Key.Delete",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_delete_value": {
-      "go": "registry.Key.DeleteValue",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_enum_subkey": {
-      "go": "registry.Key.Subkey",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_enum_value": {
-      "go": "registry.Key.ValueAtInto",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_flush": {
-      "go": "registry.Key.Flush",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_get_security": {
-      "go": "registry.Key.GetDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_hide_key": {
-      "go": "registry.Key.Hide",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_notify": {
-      "go": "registry.Key.Notify",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_open_key": {
-      "go": "registry.Key.Open",
-      "note": "registry.Open for absolute paths, Key.Open for relative paths; TakeFile adopts transferred key fds.",
-      "header": "registry.h"
-    },
-    "peios_reg_query_key_info": {
-      "go": "registry.Key.Info",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_query_value": {
-      "go": "registry.Key.QueryInto",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_query_values_batch": {
-      "go": "registry.Key.ValuesInto",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_restore": {
-      "go": "registry.Key.Restore",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_set_security": {
-      "go": "registry.Key.SetDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_set_value": {
-      "go": "registry.Key.Set",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_reg_txn_status": {
-      "go": "registry.Transaction.Status",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "registry.h"
-    },
-    "peios_sd_builder_bytes": {
-      "go": "security.Descriptor.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_control": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_dacl": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_dacl_null": {
-      "go": "security.Descriptor",
-      "note": "DACL=nil and Control &^= DACLPresent reproduces C grant-all absent DACL; present-null encoding is rejected by both.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_error": {
-      "go": "security.Descriptor.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_finish": {
-      "go": "security.Descriptor.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_free": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_group": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_new": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_owner": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_reset": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_builder_sacl": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_parse": {
-      "go": "security.ParseDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_reinherit": {
-      "go": "security.Reinherit",
-      "note": "Reinherit with nil mapping and InfoDACL|InfoSACL reproduces the convenience function.",
-      "header": "security.h"
-    },
-    "peios_sd_reinherit_ex": {
-      "go": "security.Reinherit",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_strip_inherited": {
-      "go": "security.StripInherited",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_view_control": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_view_dacl": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_view_group": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_view_owner": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sd_view_sacl": {
-      "go": "security.Descriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sddl_format_condition": {
-      "go": "security.FormatCondition",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sddl_format_sd": {
-      "go": "security.Descriptor.SDDL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sddl_parse_condition": {
-      "go": "security.ParseCondition",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sddl_parse_sd": {
-      "go": "security.ParseSDDL",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_session_create": {
-      "go": "token.SessionSpec.Create",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_session_destroy_empty": {
-      "go": "token.DestroyEmptySession",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_sid_array_count": {
-      "go": "token.Group",
-      "note": "len and indexing on []token.Group provide count/SID/attributes; owned storage.",
-      "header": "security.h"
-    },
-    "peios_sid_array_get": {
-      "go": "token.Group",
-      "note": "len and indexing on []token.Group provide count/SID/attributes; owned storage.",
-      "header": "security.h"
-    },
-    "peios_sid_array_parse": {
-      "go": "token.ParseGroups",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_build": {
-      "go": "security.NewSID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_equal": {
-      "go": "security.SID",
-      "note": "SID is immutable and comparable with ==; its zero value is invalid.",
-      "header": "security.h"
-    },
-    "peios_sid_format": {
-      "go": "security.SID.String",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_integrity": {
-      "go": "security.IntegritySID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_length": {
-      "go": "security.SID.Bytes",
-      "note": "len(s.Bytes()) gives the validated wire length.",
-      "header": "security.h"
-    },
-    "peios_sid_logon": {
-      "go": "security.LogonSID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_parse_string": {
-      "go": "security.ParseSID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_rid": {
-      "go": "security.SID.RID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_valid": {
-      "go": "security.SIDFromBytes",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "security.h"
-    },
-    "peios_sid_well_known": {
-      "go": "security.ParseSID",
-      "note": "NewSID/ParseSID represent all 13 public well-known identifiers; aliases where available, literal SIDs otherwise.",
-      "header": "security.h"
-    },
-    "peios_socket_get_impersonation_level": {
-      "go": "socket.ImpersonationLevel",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_socket_peer_pidfd": {
-      "go": "socket.PeerPIDFD",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_socket_recv_message": {
-      "go": "socket.ReceivePartial",
-      "note": "ReceivePartial returns owned delivered handles and Linux MSG_TRUNC/MSG_CTRUNC flags; excess handles close. Receive is a stricter convenience that closes all on control truncation.",
-      "header": "token.h"
-    },
-    "peios_socket_restamp": {
-      "go": "socket.Restamp",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_socket_send_message": {
-      "go": "socket.Send",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_socket_set_impersonation_level": {
-      "go": "socket.SetImpersonationLevel",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_socket_set_pass_token": {
-      "go": "socket.SetPassToken",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_sysv_get_sd": {
-      "go": "file.GetSysVDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_sysv_set_sd": {
-      "go": "file.SetSysVDescriptor",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "file.h"
-    },
-    "peios_token_adjust_default": {
-      "go": "token.Token.AdjustDefaults",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_adjust_groups": {
-      "go": "token.Token.AdjustGroups",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_adjust_privileges": {
-      "go": "token.Token.AdjustPrivileges",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_add_device_claim": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_add_device_group": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_add_group": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_add_restricted_sid": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_add_user_claim": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_audit_policy": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_bytes": {
-      "go": "token.Spec.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_confinement": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_create": {
-      "go": "token.Spec.Create",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_default_dacl": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_error": {
-      "go": "token.Spec.MarshalBinary",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_expiration": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_flags": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_free": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_integrity": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_lcs_credentials": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_mandatory_policy": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_new": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_owner_index": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_primary_group_index": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_privileges": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_projected_ids": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_reset": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_session": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_source": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_supp_gids": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_type": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_builder_user": {
-      "go": "token.Spec",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_create_raw": {
-      "go": "token.Create",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_duplicate": {
-      "go": "token.Token.Duplicate",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_generic_mapping": {
-      "go": "token.GenericMapping",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_get_linked": {
-      "go": "token.Token.Linked",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_guid": {
-      "go": "token.Token.GUID",
-      "note": "Returns the immutable 16 raw GUID bytes used by KMES.",
-      "header": "token.h"
-    },
-    "peios_token_impersonate": {
-      "go": "token.IdentityThread.Impersonate",
-      "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
-      "header": "token.h"
-    },
-    "peios_token_impersonate_peer": {
-      "go": "token.IdentityThread.ImpersonatePeer",
-      "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
-      "header": "token.h"
-    },
-    "peios_token_impersonation_level": {
-      "go": "token.Token.ImpersonationLevel",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_install": {
-      "go": "token.Token.Install",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_integrity": {
-      "go": "token.Token.Integrity",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_interactivity_scope": {
-      "go": "token.Token.InteractivityScope",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_link": {
-      "go": "token.Link",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_open_peer": {
-      "go": "token.OpenPeer",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_open_process": {
-      "go": "token.OpenProcess",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_open_self": {
-      "go": "token.OpenSelf",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_open_thread": {
-      "go": "token.OpenThread",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_privileges": {
-      "go": "token.Token.Privileges",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_query": {
-      "go": "token.Token.Query",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_reset_groups": {
-      "go": "token.Token.ResetGroups",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_reset_privileges": {
-      "go": "token.Token.ResetPrivileges",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_restrict": {
-      "go": "token.Token.Restrict",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_revert": {
-      "go": "token.IdentityThread.Revert",
-      "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
-      "header": "token.h"
-    },
-    "peios_token_set_interactivity_scope": {
-      "go": "token.Token.SetInteractivityScope",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_statistics": {
-      "go": "token.Token.Statistics",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_type": {
-      "go": "token.Token.Type",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
-    },
-    "peios_token_user": {
-      "go": "token.Token.UserSID",
-      "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
-      "header": "token.h"
+    "scope": "All functions and exported mapping objects in libpeios/include/peios/*.h; functional Go equivalents, not C ABI compatibility. Headers pinned by SHA-256.",
+    "headers_sha256": {
+        "file.h": "550fe7c3e954a37a6b614fde012192b6e2f0f3d440f53bd0fb6aba4d8c8d6805",
+        "msgpack.h": "c44b87d99b6864966d44cf446df3f8025e974b2feec511824fa740c4558c149e",
+        "token.h": "451ebcdebf3b4e90b7eff923a9cbbac39b5005a2f1761eb527f161b657751594",
+        "access.h": "56f67f88f1486d0808a64033bdd15dee06feea263873c3d3f301bd1c542bde03",
+        "security.h": "c550a710b6bf4bc01ff83c95c147190b655ba41cf97c8124af27cc4e2ea6d46b",
+        "registry.h": "3179e406c96a1a134835e08f4f63ecebff84ff31a03703be3e3c9e3cb91e1d67",
+        "process.h": "18e085872b7f02cba49148971206be7174c74922c177489eef3b8e446d9a4ddc",
+        "event.h": "4cf97453c2cb09c3b7c39f4cda52b2dedd9b313eb64d4bf4b8be95a1c04e57ab"
+    },
+    "symbols": {
+        "peios_access_check": {
+            "go": "access.Check",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_access_check_list": {
+            "go": "access.CheckList",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_access_map_generic": {
+            "go": "security.GenericMapping.Map",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_app_data": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_flags": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_inherited_object_type": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_mask": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_object_type": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_sid": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_ace_view_type": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_add": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_allow": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_audit": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_bytes": {
+            "go": "security.ACL.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_deny": {
+            "go": "security.ACE",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_error": {
+            "go": "security.ACL.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_finish": {
+            "go": "security.ACL.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_free": {
+            "go": "security.ACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_label": {
+            "go": "security.IntegritySID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_new": {
+            "go": "security.ACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_builder_reset": {
+            "go": "security.ACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_parse": {
+            "go": "security.ParseACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_view_ace": {
+            "go": "security.ACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_acl_view_count": {
+            "go": "security.ACL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_audit_context_encode": {
+            "go": "access.AuditContext",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_audit_context_validate": {
+            "go": "access.ValidateAuditContext",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_event_attach": {
+            "go": "event.AttachFile",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_emit": {
+            "go": "event.Emit",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_emit_batch": {
+            "go": "event.EmitBatch",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_policy_close": {
+            "go": "event.Policy",
+            "note": "Policy retains no resources: garbage collection suffices. Fresh resolution on each call replaces watch caching; same tier/deepest-Enabled policy with immediate updates.",
+            "header": "event.h"
+        },
+        "peios_event_policy_enabled": {
+            "go": "event.Policy.Enabled",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_policy_open": {
+            "go": "event.OpenPolicy",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_reader_close": {
+            "go": "event.Reader.Close",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_reader_lost": {
+            "go": "event.Reader.Lost",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_reader_next": {
+            "go": "event.Reader.Next",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_reader_open": {
+            "go": "event.Attach",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_reader_wait": {
+            "go": "event.Reader.Wait",
+            "note": "context deadlines/cancellation replace timeout milliseconds. Ring wait checks readiness before cancellation. Reader owns automatic resize recovery; Ring caller owns cursor/generation handling.",
+            "header": "event.h"
+        },
+        "peios_event_ring_capacity": {
+            "go": "event.Ring.Metadata",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_event_at": {
+            "go": "event.Ring.EventAt",
+            "note": "Owned event data instead of borrowed mmap pointers; EAGAIN on lapping/empty/change protects reads. Caller can drive any live byte cursor.",
+            "header": "event.h"
+        },
+        "peios_event_ring_generation": {
+            "go": "event.Ring.Metadata",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_map": {
+            "go": "event.MapRing",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_set_need_wake": {
+            "go": "event.Ring.SetNeedWake",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_tail_pos": {
+            "go": "event.Ring.Metadata",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_unmap": {
+            "go": "event.Ring.Close",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_ring_wait": {
+            "go": "event.Ring.Wait",
+            "note": "context deadlines/cancellation replace timeout milliseconds. Ring wait checks readiness before cancellation. Reader owns automatic resize recovery; Ring caller owns cursor/generation handling.",
+            "header": "event.h"
+        },
+        "peios_event_ring_write_pos": {
+            "go": "event.Ring.Metadata",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_event_slot_count": {
+            "go": "event.SlotCount",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "event.h"
+        },
+        "peios_fd_get_sd": {
+            "go": "file.GetDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_fd_set_sd": {
+            "go": "file.SetDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_generic_mapping": {
+            "go": "file.GenericMapping",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_get_sd": {
+            "go": "file.GetDescriptorAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_open": {
+            "go": "file.OpenAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_set_sd": {
+            "go": "file.SetDescriptorAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_logon_sessions_close": {
+            "go": "token.SessionReader.Close",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_logon_sessions_next": {
+            "go": "token.SessionReader.Next",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_logon_sessions_open": {
+            "go": "token.OpenSessions",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_mount_get_policy": {
+            "go": "file.GetMountPolicy",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_mount_set_policy": {
+            "go": "file.SetMountPolicy",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_mp_peek": {
+            "go": "msgpack.Reader.Peek",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_array": {
+            "go": "msgpack.Reader.Array",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_bin": {
+            "go": "msgpack.Reader.Binary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_bool": {
+            "go": "msgpack.Reader.Bool",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_ext": {
+            "go": "msgpack.Reader.Extension",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_float": {
+            "go": "msgpack.Reader.Float",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_int": {
+            "go": "msgpack.Reader.Int",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_map": {
+            "go": "msgpack.Reader.Map",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_nil": {
+            "go": "msgpack.Reader.Nil",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_str": {
+            "go": "msgpack.Reader.StringBytes",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_read_uint": {
+            "go": "msgpack.Reader.Uint",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_reader_init": {
+            "go": "msgpack.Reader.Reset",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_reader_remaining": {
+            "go": "msgpack.Reader.Remaining",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_skip": {
+            "go": "msgpack.Reader.Skip",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_validate": {
+            "go": "msgpack.Validate",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_array": {
+            "go": "msgpack.Writer.Array",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_bin": {
+            "go": "msgpack.Writer.Binary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_bool": {
+            "go": "msgpack.Writer.Bool",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_ext": {
+            "go": "msgpack.Writer.Extension",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_float": {
+            "go": "msgpack.Writer.Float",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_int": {
+            "go": "msgpack.Writer.Int",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_map": {
+            "go": "msgpack.Writer.Map",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_nil": {
+            "go": "msgpack.Writer.Nil",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_raw": {
+            "go": "msgpack.Writer.Raw",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_str": {
+            "go": "msgpack.Writer.String",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_write_uint": {
+            "go": "msgpack.Writer.Uint",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_writer_bytes": {
+            "go": "msgpack.Writer.Bytes",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_writer_error": {
+            "go": "msgpack.Writer.Err",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_writer_free": {
+            "go": "msgpack.Writer",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_writer_new": {
+            "go": "msgpack.Writer",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_mp_writer_reset": {
+            "go": "msgpack.Writer.Reset",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "msgpack.h"
+        },
+        "peios_process_generic_mapping": {
+            "go": "process.GenericMapping",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "process.h"
+        },
+        "peios_process_psb": {
+            "go": "process.ReadSecurityBlock",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "process.h"
+        },
+        "peios_process_set_mitigations": {
+            "go": "process.SetMitigations",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "process.h"
+        },
+        "peios_reg_backup": {
+            "go": "registry.Key.Backup",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_begin_transaction": {
+            "go": "registry.Begin",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_blanket_tombstone": {
+            "go": "registry.Key.BlanketTombstone",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_commit": {
+            "go": "registry.Transaction.Commit",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_create_key": {
+            "go": "registry.Key.Create",
+            "note": "registry.Create for absolute paths, Key.Create for relative paths; options retain access, flags, layer and transaction.",
+            "header": "registry.h"
+        },
+        "peios_reg_delete_key": {
+            "go": "registry.Key.Delete",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_delete_value": {
+            "go": "registry.Key.DeleteValue",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_enum_subkey": {
+            "go": "registry.Key.Subkey",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_enum_value": {
+            "go": "registry.Key.ValueAtInto",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_flush": {
+            "go": "registry.Key.Flush",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_get_security": {
+            "go": "registry.Key.GetDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_hide_key": {
+            "go": "registry.Key.Hide",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_notify": {
+            "go": "registry.Key.Notify",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_open_key": {
+            "go": "registry.Key.Open",
+            "note": "registry.Open for absolute paths, Key.Open for relative paths; TakeFile adopts transferred key fds.",
+            "header": "registry.h"
+        },
+        "peios_reg_query_key_info": {
+            "go": "registry.Key.Info",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_query_value": {
+            "go": "registry.Key.QueryInto",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_query_values_batch": {
+            "go": "registry.Key.ValuesInto",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_restore": {
+            "go": "registry.Key.Restore",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_set_security": {
+            "go": "registry.Key.SetDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_set_value": {
+            "go": "registry.Key.Set",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_txn_status": {
+            "go": "registry.Transaction.Status",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_sd_builder_bytes": {
+            "go": "security.Descriptor.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_control": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_dacl": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_dacl_null": {
+            "go": "security.Descriptor",
+            "note": "DACL=nil and Control &^= DACLPresent reproduces C grant-all absent DACL; present-null encoding is rejected by both.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_error": {
+            "go": "security.Descriptor.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_finish": {
+            "go": "security.Descriptor.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_free": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_group": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_new": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_owner": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_reset": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_builder_sacl": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_parse": {
+            "go": "security.ParseDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_reinherit": {
+            "go": "security.Reinherit",
+            "note": "Reinherit with nil mapping and InfoDACL|InfoSACL reproduces the convenience function.",
+            "header": "security.h"
+        },
+        "peios_sd_reinherit_ex": {
+            "go": "security.Reinherit",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_strip_inherited": {
+            "go": "security.StripInherited",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_view_control": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_view_dacl": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_view_group": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_view_owner": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sd_view_sacl": {
+            "go": "security.Descriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sddl_format_condition": {
+            "go": "security.FormatCondition",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sddl_format_sd": {
+            "go": "security.Descriptor.SDDL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sddl_parse_condition": {
+            "go": "security.ParseCondition",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sddl_parse_sd": {
+            "go": "security.ParseSDDL",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_session_create": {
+            "go": "token.SessionSpec.Create",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_session_destroy_empty": {
+            "go": "token.DestroyEmptySession",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_sid_array_count": {
+            "go": "token.Group",
+            "note": "len and indexing on []token.Group provide count/SID/attributes; owned storage.",
+            "header": "security.h"
+        },
+        "peios_sid_array_get": {
+            "go": "token.Group",
+            "note": "len and indexing on []token.Group provide count/SID/attributes; owned storage.",
+            "header": "security.h"
+        },
+        "peios_sid_array_parse": {
+            "go": "token.ParseGroups",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_build": {
+            "go": "security.NewSID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_equal": {
+            "go": "security.SID",
+            "note": "SID is immutable and comparable with ==; its zero value is invalid.",
+            "header": "security.h"
+        },
+        "peios_sid_format": {
+            "go": "security.SID.String",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_integrity": {
+            "go": "security.IntegritySID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_length": {
+            "go": "security.SID.Bytes",
+            "note": "len(s.Bytes()) gives the validated wire length.",
+            "header": "security.h"
+        },
+        "peios_sid_logon": {
+            "go": "security.LogonSID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_parse_string": {
+            "go": "security.ParseSID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_rid": {
+            "go": "security.SID.RID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_valid": {
+            "go": "security.SIDFromBytes",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "security.h"
+        },
+        "peios_sid_well_known": {
+            "go": "security.ParseSID",
+            "note": "NewSID/ParseSID represent all 13 public well-known identifiers; aliases where available, literal SIDs otherwise.",
+            "header": "security.h"
+        },
+        "peios_socket_get_impersonation_level": {
+            "go": "socket.ImpersonationLevel",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_socket_peer_pidfd": {
+            "go": "socket.PeerPIDFD",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_socket_recv_message": {
+            "go": "socket.ReceivePartial",
+            "note": "ReceivePartial returns owned delivered handles and Linux MSG_TRUNC/MSG_CTRUNC flags; excess handles close. Receive is a stricter convenience that closes all on control truncation.",
+            "header": "token.h"
+        },
+        "peios_socket_restamp": {
+            "go": "socket.Restamp",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_socket_send_message": {
+            "go": "socket.Send",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_socket_set_impersonation_level": {
+            "go": "socket.SetImpersonationLevel",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_socket_set_pass_token": {
+            "go": "socket.SetPassToken",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_sysv_get_sd": {
+            "go": "file.GetSysVDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_sysv_set_sd": {
+            "go": "file.SetSysVDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_token_adjust_default": {
+            "go": "token.Token.AdjustDefaults",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_adjust_groups": {
+            "go": "token.Token.AdjustGroups",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_adjust_privileges": {
+            "go": "token.Token.AdjustPrivileges",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_add_device_claim": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_add_device_group": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_add_group": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_add_restricted_sid": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_add_user_claim": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_audit_policy": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_bytes": {
+            "go": "token.Spec.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_confinement": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_create": {
+            "go": "token.Spec.Create",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_default_dacl": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_error": {
+            "go": "token.Spec.MarshalBinary",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_expiration": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_flags": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_free": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_integrity": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_lcs_credentials": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_mandatory_policy": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_new": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_owner_index": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_primary_group_index": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_privileges": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_projected_ids": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_reset": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_session": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_source": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_supp_gids": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_type": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_builder_user": {
+            "go": "token.Spec",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_create_raw": {
+            "go": "token.Create",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_duplicate": {
+            "go": "token.Token.Duplicate",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_generic_mapping": {
+            "go": "token.GenericMapping",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_get_linked": {
+            "go": "token.Token.Linked",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_guid": {
+            "go": "token.Token.GUID",
+            "note": "Returns the immutable 16 raw GUID bytes used by KMES.",
+            "header": "token.h"
+        },
+        "peios_token_impersonate": {
+            "go": "token.IdentityThread.Impersonate",
+            "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
+            "header": "token.h"
+        },
+        "peios_token_impersonate_peer": {
+            "go": "token.IdentityThread.ImpersonatePeer",
+            "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
+            "header": "token.h"
+        },
+        "peios_token_impersonation_level": {
+            "go": "token.Token.ImpersonationLevel",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_install": {
+            "go": "token.Token.Install",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_integrity": {
+            "go": "token.Token.Integrity",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_interactivity_scope": {
+            "go": "token.Token.InteractivityScope",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_link": {
+            "go": "token.Link",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_open_peer": {
+            "go": "token.OpenPeer",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_open_process": {
+            "go": "token.OpenProcess",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_open_self": {
+            "go": "token.OpenSelf",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_open_thread": {
+            "go": "token.OpenThread",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_privileges": {
+            "go": "token.Token.Privileges",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_query": {
+            "go": "token.Token.Query",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_reset_groups": {
+            "go": "token.Token.ResetGroups",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_reset_privileges": {
+            "go": "token.Token.ResetPrivileges",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_restrict": {
+            "go": "token.Token.Restrict",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_revert": {
+            "go": "token.IdentityThread.Revert",
+            "note": "Within WithIdentityThread, permits repeated identity switches on one dedicated locked thread; automatic final revert/retirement protects Go scheduling. Token.Impersonate supplies the common single-identity callback.",
+            "header": "token.h"
+        },
+        "peios_token_set_interactivity_scope": {
+            "go": "token.Token.SetInteractivityScope",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_statistics": {
+            "go": "token.Token.Statistics",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_type": {
+            "go": "token.Token.Type",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        },
+        "peios_token_user": {
+            "go": "token.Token.UserSID",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "token.h"
+        }
     }
-  }
 }

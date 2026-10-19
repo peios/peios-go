@@ -26,6 +26,12 @@ func TestReferenceAPIs(t *testing.T) {
 		"sddl":      {"O:SYG:BAD:(A;;FA;;;BA)(A;;FR;;;BU)", "D:", "O:SY", "D:PAI(A;OICI;FRFX0x6;;;CO)", "S:(ML;;NWNR;;;ME)", "D:(OA;;GA;00112233-4455-6677-8899-aabbccddeeff;;WD)", "D:(XA;;GA;;;WD;(@User.Department == \"Engineering\"))", "S:(RA;;;;;WD;(\"Level\",TI,0x0,3))", "S:(RA;;;;;WD;(\"Team\",TS,0x0,\"Blue\",\"Red\"))", "S:(RA;;;;;WD;(\"Group\",TD,0x0,SID(BA)))", "S:(RA;;;;;WD;(\"Bytes\",TX,0x0,#aabb))", "D:(A;;1179817;;;WD)", "D:(A;;FR0x;;;WD)", "D:(A;;GA;;;DA)", "garbage", "D:D:"},
 		"condition": {"@User.Title == \"PM\"", "Exists @Resource.Level", "@User.Level >= -1 && !(Member_of {SID(BA), SID(SY)})", "@User.Team Any_of {\"Blue\", \"Red\"}", "@User.x == #aabb || Not_Exists @Device.y", "@User.x == 0x7f", "nonsense"},
 	}
+	for _, count := range []int{127, 128, 129} {
+		for _, operator := range []string{" && ", " || "} {
+			input := strings.Repeat("@User.x == 1"+operator, count-1) + "@User.x == 1"
+			cases["condition"] = append(cases["condition"], input)
+		}
+	}
 	corpus, e := os.ReadFile("testdata/sddl-conformance.txt")
 	if e != nil {
 		t.Fatal(e)

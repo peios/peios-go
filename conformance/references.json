@@ -1,5 +1,7 @@
 {
-  "pkm": "c8e323ee29b67efa8d8b9ee1279b5a9fd4168056",
-  "libpeios": "3f2ce51c7cfc27644f72a053ca01888736905064",
-  "peios-rs": "1eef3ee4f7d4b38072dfb14b1ba350f2dd3422aa"
+    "kernel": "fd763de6ef498489711a885e7d6f92162db5aff0",
+    "c_sdk_minimum": "0.5.12",
+    "c_sdk": "explicit PEIOS_SDK input; exact files recorded by tools/conformance.sh",
+    "rust_sdk": "explicit PEIOS_RUST_SDK input; exact source recorded by tools/conformance.sh",
+    "historical_baseline": "docs/archive/conformance-references.json"
 }

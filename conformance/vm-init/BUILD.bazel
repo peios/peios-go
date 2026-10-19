@@ -1,0 +1,19 @@
+load("@rules_go//go:def.bzl", "go_binary")
+
+package(default_visibility = ["//visibility:public"])
+
+go_binary(
+    name = "init",
+    srcs = glob(["*.go"]),
+    pure = "on",
+    tags = ["manual"],
+    deps = ["//file:go_default_library"],
+)
+
+filegroup(
+    name = "sources",
+    srcs = glob([
+        "*.go",
+        "*.bazel",
+    ]),
+)

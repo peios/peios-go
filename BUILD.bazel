@@ -1,0 +1,62 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "artifacts",
+    srcs = [
+        "//access:go_default_library",
+        "//event:go_default_library",
+        "//file:go_default_library",
+        "//internal/native:go_default_library",
+        "//internal/uapi:go_default_library",
+        "//msgpack:go_default_library",
+        "//process:go_default_library",
+        "//registry:go_default_library",
+        "//registry/source:go_default_library",
+        "//security:go_default_library",
+        "//socket:go_default_library",
+        "//token:go_default_library",
+    ],
+)
+
+filegroup(
+    name = "package-sources",
+    srcs = glob(
+        [
+            "*",
+            ".bazel*",
+            ".gitignore",
+            ".github/**",
+            "docs/**",
+        ],
+        allow_empty = True,
+        exclude = [
+            "bazel-*",
+            "docs/archive/**",
+            "docs/learn/dist/**",
+        ],
+    ) + [
+        "//access:sources",
+        "//build:sources",
+        "//conformance:sources",
+        "//conformance/native:sources",
+        "//event:sources",
+        "//file:sources",
+        "//internal/native:sources",
+        "//internal/uapi:sources",
+        "//msgpack:sources",
+        "//packages:sources",
+        "//process:sources",
+        "//registry:sources",
+        "//registry/source:sources",
+        "//security:sources",
+        "//socket:sources",
+        "//token:sources",
+        "//tools:sources",
+        "//vendor:sources",
+    ],
+)
+
+alias(
+    name = "packages",
+    actual = "//packages:store",
+)

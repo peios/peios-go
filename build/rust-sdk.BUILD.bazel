@@ -1,0 +1,46 @@
+load("@rules_rust//cargo:defs.bzl", "cargo_build_script")
+load("@rules_rust//rust:defs.bzl", "rust_library")
+
+package(default_visibility = ["//visibility:public"])
+
+cargo_build_script(
+    name = "build-script",
+    srcs = ["peios-sys/build.rs"],
+    build_script_env = {"PEIOS_BAZEL_SDK_ROOT": "$(execpath @peios_sdk//:root)"},
+    compile_data = ["peios-sys/Cargo.toml"],
+    crate_root = "peios-sys/build.rs",
+    data = [
+        "@peios_sdk//:files",
+        "@peios_sdk//:root",
+    ],
+    edition = "2021",
+    version = "0.3.0",
+    deps = [
+        "@oracle_crates//:bindgen",
+        "@oracle_crates//:pkg-config",
+    ],
+)
+
+rust_library(
+    name = "peios-sys",
+    srcs = ["peios-sys/src/lib.rs"],
+    crate_name = "peios_sys",
+    edition = "2021",
+    link_deps = ["@peios_sdk//:peios"],
+    version = "0.3.0",
+    deps = [":build-script"],
+)
+
+rust_library(
+    name = "peios",
+    srcs = glob(["peios/src/**/*.rs"]),
+    crate_name = "peios",
+    crate_root = "peios/src/lib.rs",
+    edition = "2021",
+    version = "0.4.0",
+    deps = [
+        ":peios-sys",
+        "@oracle_crates//:bitflags",
+        "@oracle_crates//:libc",
+    ],
+)

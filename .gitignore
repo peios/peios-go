@@ -1,2 +1,12 @@
-/build/
+/build/*
+!/build/*.bzl
+!/build/*.bazel
+!/build/*.patch
+!/build/*.sha256
 /conformance/rust/target/
+
+/bazel-*
+/.ci-sdk/
+/docs/learn/dist/
+**/__pycache__/
+**/.ruff_cache/

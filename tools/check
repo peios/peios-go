@@ -1,0 +1,16 @@
+#!/bin/bash
+# Validate maintained source, declared build outputs and development packages.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+python3 tools/style-check.py
+python3 tools/update-kernel-inputs.py check
+./bazel test //...
+./bazel build //:packages
+CGO_ENABLED=0 go test ./...
+go test -race ./...
+python3 tools/check-uapi.py
+if [[ -n ${PEIOS_SDK:-} && -n ${PEIOS_RUST_SDK:-} ]]; then
+    tools/conformance.sh
+else
+    echo "Differential checks require PEIOS_SDK and PEIOS_RUST_SDK."
+fi

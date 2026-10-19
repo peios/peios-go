@@ -1,0 +1,51 @@
+load("@rules_go//go:def.bzl", "go_library", "go_test")
+
+package(default_visibility = ["//visibility:public"])
+
+go_library(
+    name = "go_default_library",
+    srcs = [
+        "claim.go",
+        "condition.go",
+        "descriptor.go",
+        "inherit.go",
+        "sddl.go",
+        "sid.go",
+        "vocabulary.go",
+    ],
+    importpath = "github.com/peios/peios-go/security",
+    deps = ["//internal/uapi:go_default_library"],
+)
+
+go_test(
+    name = "tests",
+    srcs = [
+        "condition_depth_test.go",
+        "decimal_rights_test.go",
+        "null_acl_test.go",
+        "security_test.go",
+    ],
+    data = glob(
+        ["testdata/**"],
+        allow_empty = True,
+    ),
+    embed = [":go_default_library"],
+    tags = [],
+    deps = [],
+)
+
+filegroup(
+    name = "sources",
+    srcs = glob(
+        ["**"],
+        exclude = [
+            "target/**",
+            "rust/target/**",
+        ],
+    ),
+)
+
+filegroup(
+    name = "testdata",
+    srcs = glob(["testdata/**"]),
+)
