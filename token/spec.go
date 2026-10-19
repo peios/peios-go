@@ -50,6 +50,116 @@ type Spec struct {
 }
 
 func (s Spec) MarshalBinary() ([]byte, error) {
+	b, err := s.marshalHeader()
+	if err != nil {
+		return nil, err
+	}
+	put := func(off int, v uint32) { binary.LittleEndian.PutUint32(b[off:], v) }
+	place := func(off, count int, data []byte, n int) error {
+		if len(data) == 0 {
+			return nil
+		}
+		if len(b)+len(data) > uapi.KACS_TOKEN_SPEC_MAX_BYTES {
+			return ErrSpec
+		}
+		put(off, uint32(len(b)))
+		if count >= 0 {
+			put(count, uint32(n))
+		}
+		b = append(b, data...)
+		return nil
+	}
+	if s.User.Valid() {
+		if e := place(uapi.KACS_TOKEN_SPEC_OFF_USER_SID_OFFSET, -1, s.User.Bytes(), 0); e != nil {
+			return nil, e
+		}
+	}
+	groups := func(off, count int, gs []Group) error {
+		// The wire byte ceiling, not an arbitrary group count, is the limit.
+		if len(gs) > (uapi.KACS_TOKEN_SPEC_MAX_BYTES-uapi.KACS_TOKEN_SPEC_HEADER_BYTES)/16 {
+			return ErrSpec
+		}
+		var data []byte
+		for _, g := range gs {
+			if !g.SID.Valid() {
+				return ErrSpec
+			}
+			sid := g.SID.Bytes()
+			data = binary.LittleEndian.AppendUint32(data, uint32(len(sid)))
+			data = append(data, sid...)
+			data = binary.LittleEndian.AppendUint32(data, g.Attributes)
+		}
+		return place(off, count, data, len(gs))
+	}
+	if e := groups(uapi.KACS_TOKEN_SPEC_OFF_GROUPS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_GROUPS_COUNT, s.Groups); e != nil {
+		return nil, e
+	}
+	if s.DefaultDACL != nil {
+		d, e := s.DefaultDACL.MarshalBinary()
+		if e != nil {
+			return nil, e
+		}
+		if e = place(uapi.KACS_TOKEN_SPEC_OFF_DEFAULT_DACL_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_DEFAULT_DACL_LEN, d, len(d)); e != nil {
+			return nil, e
+		}
+	}
+	if e := groups(uapi.KACS_TOKEN_SPEC_OFF_DEVICE_GROUPS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_DEVICE_GROUPS_COUNT, s.DeviceGroups); e != nil {
+		return nil, e
+	}
+	if e := groups(uapi.KACS_TOKEN_SPEC_OFF_RESTRICTED_SIDS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_RESTRICTED_SIDS_COUNT, s.RestrictedSIDs); e != nil {
+		return nil, e
+	}
+	if s.Confinement.Valid() {
+		d := s.Confinement.Bytes()
+		if e := place(uapi.KACS_TOKEN_SPEC_OFF_CONFINEMENT_SID_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_CONFINEMENT_SID_LEN, d, len(d)); e != nil {
+			return nil, e
+		}
+	}
+	var gids []byte
+	for _, g := range s.SupplementaryGIDs {
+		gids = binary.LittleEndian.AppendUint32(gids, g)
+	}
+	if e := place(uapi.KACS_TOKEN_SPEC_OFF_SUPP_GIDS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_SUPP_GIDS_COUNT, gids, len(s.SupplementaryGIDs)); e != nil {
+		return nil, e
+	}
+	claimSets := []struct {
+		offset, length int
+		claims         []security.Claim
+	}{
+		{uapi.KACS_TOKEN_SPEC_OFF_USER_CLAIMS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_USER_CLAIMS_LEN, s.UserClaims},
+		{uapi.KACS_TOKEN_SPEC_OFF_DEVICE_CLAIMS_OFFSET, uapi.KACS_TOKEN_SPEC_OFF_DEVICE_CLAIMS_LEN, s.DeviceClaims},
+	}
+	for _, set := range claimSets {
+		var data []byte
+		for _, c := range set.claims {
+			d, e := marshalClaim(c)
+			if e != nil {
+				return nil, e
+			}
+			data = binary.LittleEndian.AppendUint32(data, uint32(len(d)))
+			data = append(data, d...)
+			if len(data) > uapi.KACS_TOKEN_SPEC_MAX_BYTES {
+				return nil, ErrSpec
+			}
+		}
+		if e := place(set.offset, set.length, data, len(data)); e != nil {
+			return nil, e
+		}
+	}
+	if s.LCS != nil {
+		d, e := s.LCS.MarshalBinary()
+		if e != nil {
+			return nil, e
+		}
+		if e = place(uapi.KACS_TOKEN_SPEC_OFF_LCS_CREDENTIALS_OFFSET, -1, d, 0); e != nil {
+			return nil, e
+		}
+	}
+	return b, nil
+}
+
+// marshalHeader writes the fixed fields before variable-length data is appended.
+func (s Spec) marshalHeader() ([]byte, error) {
 	b := make([]byte, uapi.KACS_TOKEN_SPEC_HEADER_BYTES)
 	put := func(off int, v uint32) { binary.LittleEndian.PutUint32(b[off:], v) }
 	put64 := func(off int, v uint64) { binary.LittleEndian.PutUint64(b[off:], v) }
@@ -84,101 +194,9 @@ func (s Spec) MarshalBinary() ([]byte, error) {
 		b[uapi.KACS_TOKEN_SPEC_OFF_CONFINEMENT_EXEMPT] = 1
 	}
 	copy(b[uapi.KACS_TOKEN_SPEC_OFF_SOURCE_NAME:], s.SourceName)
-	place := func(off, count int, data []byte, n int) error {
-		if len(data) == 0 {
-			return nil
-		}
-		if len(b)+len(data) > uapi.KACS_TOKEN_SPEC_MAX_BYTES {
-			return ErrSpec
-		}
-		put(off, uint32(len(b)))
-		if count >= 0 {
-			put(count, uint32(n))
-		}
-		b = append(b, data...)
-		return nil
-	}
-	if s.User.Valid() {
-		if e := place(88, -1, s.User.Bytes(), 0); e != nil {
-			return nil, e
-		}
-	}
-	groups := func(off, count int, gs []Group) error {
-		// The wire byte ceiling, not an arbitrary group count, is the limit.
-		if len(gs) > (uapi.KACS_TOKEN_SPEC_MAX_BYTES-uapi.KACS_TOKEN_SPEC_HEADER_BYTES)/16 {
-			return ErrSpec
-		}
-		var data []byte
-		for _, g := range gs {
-			if !g.SID.Valid() {
-				return ErrSpec
-			}
-			sid := g.SID.Bytes()
-			data = binary.LittleEndian.AppendUint32(data, uint32(len(sid)))
-			data = append(data, sid...)
-			data = binary.LittleEndian.AppendUint32(data, g.Attributes)
-		}
-		return place(off, count, data, len(gs))
-	}
-	if e := groups(92, 96, s.Groups); e != nil {
-		return nil, e
-	}
-	if s.DefaultDACL != nil {
-		d, e := s.DefaultDACL.MarshalBinary()
-		if e != nil {
-			return nil, e
-		}
-		if e = place(100, 104, d, len(d)); e != nil {
-			return nil, e
-		}
-	}
-	if e := groups(124, 128, s.DeviceGroups); e != nil {
-		return nil, e
-	}
-	if e := groups(132, 136, s.RestrictedSIDs); e != nil {
-		return nil, e
-	}
-	if s.Confinement.Valid() {
-		d := s.Confinement.Bytes()
-		if e := place(140, 144, d, len(d)); e != nil {
-			return nil, e
-		}
-	}
-	var gids []byte
-	for _, g := range s.SupplementaryGIDs {
-		gids = binary.LittleEndian.AppendUint32(gids, g)
-	}
-	if e := place(160, 164, gids, len(s.SupplementaryGIDs)); e != nil {
-		return nil, e
-	}
-	for i, claims := range [][]security.Claim{s.UserClaims, s.DeviceClaims} {
-		var data []byte
-		for _, c := range claims {
-			d, e := marshalClaim(c)
-			if e != nil {
-				return nil, e
-			}
-			data = binary.LittleEndian.AppendUint32(data, uint32(len(d)))
-			data = append(data, d...)
-			if len(data) > uapi.KACS_TOKEN_SPEC_MAX_BYTES {
-				return nil, ErrSpec
-			}
-		}
-		if e := place(108+i*8, 112+i*8, data, len(data)); e != nil {
-			return nil, e
-		}
-	}
-	if s.LCS != nil {
-		d, e := s.LCS.MarshalBinary()
-		if e != nil {
-			return nil, e
-		}
-		if e = place(188, -1, d, 0); e != nil {
-			return nil, e
-		}
-	}
 	return b, nil
 }
+
 func (c LCSCredentials) MarshalBinary() ([]byte, error) {
 	if len(c.Scopes) > uapi.KACS_TOKEN_LCS_MAX_SCOPE_GUIDS || len(c.PrivateLayers) > uapi.KACS_TOKEN_LCS_MAX_PRIVATE_LAYERS {
 		return nil, ErrSpec
