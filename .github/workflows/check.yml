@@ -49,7 +49,7 @@ jobs:
               uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
               with:
                   repository: peios/peios-rs
-                  ref: a8eeb6a406bb040b16c5a3a8a2d4da3a4d31593b
+                  ref: 26ac6968cec4cb7f887198aa3fb9268096660831
                   path: .ci-sdk/peios-rs
                   persist-credentials: false
             - name: Check style, build, tests and packages
