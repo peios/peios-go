@@ -1,0 +1,29 @@
+{
+    "source_root": "learn-staging",
+    "files": [
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/100--sdk-basics.topic/500--using-the-sdk-from-go.md",
+            "sha256": "4d54cc8ac3afd7fbd3eeeec596c8c7a642bcd8ca015d7fa99fcf00978279cce5"
+        },
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/700--go-sdk-reference.book/trail.toml",
+            "sha256": "f03e7a3345d3f11a09ec19aa40aec725ee1e94137c24e1eab561c4b2eced688a"
+        },
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/700--go-sdk-reference.book/2--go-sdk-security/1--security-descriptors-and-selectors.md",
+            "sha256": "e0cad8f8efe37b9e13b1fc151a99218ba97189e9d1d25956b4a08735eac87ec4"
+        },
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/700--go-sdk-reference.book/2--go-sdk-security/trail.toml",
+            "sha256": "7d230efb714b6471362991cdc535b78c39ded11b0e7ecb430bff18798974850a"
+        },
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/700--go-sdk-reference.book/1--go-sdk-conventions/1--overview.md",
+            "sha256": "82e68a699a916b879008d303dba7ab1a68f9f52e2cefb36701b3a732d8d5341f"
+        },
+        {
+            "source": "peios.product/4--developing-for-peios.antho/300--the-sdk.shelf/700--go-sdk-reference.book/1--go-sdk-conventions/trail.toml",
+            "sha256": "061935f1a3d47f96f5febb588f003fee0ac81f8c1a377a5a6e99e44f70e366d4"
+        }
+    ]
+}

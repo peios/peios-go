@@ -1,0 +1,168 @@
+diff --git a/src/event/consume.rs b/src/event/consume.rs
+index b84c14b..d60da40 100644
+--- a/src/event/consume.rs
++++ b/src/event/consume.rs
+@@ -269,11 +269,14 @@ impl Ring {
+     /// `write_pos` to close the race, then `FUTEX_WAIT` on the counter.
+     fn wait(&self, read_pos: u64, timeout_ms: c_int) -> Wait {
+         self.set_need_wake(true);
++        // Capture before the final condition check: a producer between that
++        // check and FUTEX_WAIT must change the expected counter, not become
++        // the value we sleep on after its wake has already happened.
++        let observed = self.futex_counter();
+         if self.write_pos() != read_pos {
+             self.set_need_wake(false);
+             return Wait::Ready; // raced — events appeared
+         }
+-        let observed = self.futex_counter();
+         let r = unsafe { futex_wait(self.futex_ptr(), observed, timeout_ms) };
+         self.set_need_wake(false);
+         if r == 0 {
+diff --git a/src/security/sddl/build.rs b/src/security/sddl/build.rs
+index 99ca122..edd3a09 100644
+--- a/src/security/sddl/build.rs
++++ b/src/security/sddl/build.rs
+@@ -191,11 +191,11 @@ impl AceBuilder {
+     ///
+     /// # Errors
+     /// [`Error::Encode`] if the body is too large for the ACE to fit its
+-    /// 16-bit `AceSize` field (body length must be ≤ 65531).
++    /// 16-bit, DWORD-aligned `AceSize` field (body length must be ≤ 65528).
+     pub fn raw(ace_type: u8, body: impl Into<Vec<u8>>) -> Result<Self> {
+         let body = body.into();
+-        if body.len() > u16::MAX as usize - 4 {
+-            return Err(Error::Encode("ACE body exceeds 65531 bytes"));
++        if body.len() > (u16::MAX as usize & !3) - 4 {
++            return Err(Error::Encode("ACE body exceeds 65528 bytes"));
+         }
+         Ok(AceBuilder {
+             ace_type,
+@@ -367,12 +367,13 @@ impl AceBuilder {
+         self
+     }
+ 
+-    /// Total wire size of this ACE: 4-byte header plus the body.
++    /// Total wire size, including zero padding to the required DWORD boundary.
+     fn encoded_len(&self) -> usize {
+-        4 + match &self.body {
++        let len = 4 + match &self.body {
+             AceBody::MaskSid { sid, .. } => 4 + sid.encoded_len(),
+             AceBody::Raw(body) => body.len(),
+-        }
++        };
++        (len + 3) & !3
+     }
+ 
+     /// True if this ACE type requires `ACL_REVISION_DS` — the object-type
+@@ -397,6 +398,7 @@ impl AceBuilder {
+             }
+             AceBody::Raw(body) => out.extend_from_slice(body),
+         }
++        out.resize(size, 0);
+         out
+     }
+ }
+@@ -666,7 +668,8 @@ mod tests {
+             u16::from_le_bytes([bytes[2], bytes[3]]) as usize,
+             bytes.len()
+         );
+-        assert_eq!(&bytes[4..], &body[..]);
++        assert_eq!(&bytes[4..4 + body.len()], &body[..]);
++        assert_eq!(&bytes[4 + body.len()..], &[0, 0]);
+     }
+ 
+     #[test]
+@@ -696,6 +699,27 @@ mod tests {
+         ));
+     }
+ 
++    #[test]
++    fn resource_attribute_aces_pad_every_payload_length() {
++        // PCDS ACE format requires AceSize % 4 == 0. Resource claims may end
++        // on any byte boundary (unlike the already-padded artx payload).
++        for len in 0..8 {
++            let claim = ClaimAttribute::new(
++                "Bytes",
++                alloc::vec![ClaimValue::Octet(alloc::vec![0xab; len])],
++            );
++            let entry = claim.encode().unwrap();
++            let ace = AceBuilder::resource_attribute(&claim).unwrap().build();
++            let payload_start = 8 + WellKnownSid::Everyone.to_sid().encoded_len();
++            assert_eq!(ace.len() % 4, 0);
++            assert_eq!(u16::from_le_bytes([ace[2], ace[3]]) as usize, ace.len());
++            assert_eq!(&ace[payload_start..payload_start + entry.len()], &entry);
++            assert!(ace[payload_start + entry.len()..].iter().all(|b| *b == 0));
++        }
++        assert_eq!(AceBuilder::raw(0x12, alloc::vec![0; 65528]).unwrap().build().len(), 65532);
++        assert!(AceBuilder::raw(0x12, alloc::vec![0; 65529]).is_err());
++    }
++
+     #[test]
+     fn object_ace_encodes_present_guids() {
+         let ot = [0x11u8; 16];
+diff --git a/src/token/message.rs b/src/token/message.rs
+index 4f5685e..0976390 100644
+--- a/src/token/message.rs
++++ b/src/token/message.rs
+@@ -169,6 +169,7 @@ fn parse_control(buf: &[u8]) -> impl Iterator<Item = ParsedCmsg<'_>> {
+ unsafe fn deliver_control(buf: &[u8], msg: &mut peios_socket_message) {
+     msg.token_fd = -1;
+     msg.fd_count = 0;
++    msg.flags = 0;
+     for cmsg in parse_control(buf) {
+         let ints = cmsg.data.chunks_exact(size_of::<c_int>());
+         match (cmsg.level, cmsg.kind) {
+@@ -181,6 +182,7 @@ unsafe fn deliver_control(buf: &[u8], msg: &mut peios_socket_message) {
+                         // At most one per message by the kernel's contract; a
+                         // second is not ours to keep.
+                         libc::close(fd);
++                        msg.flags |= PEIOS_SOCKET_MSG_CTRUNCATED;
+                     }
+                 }
+             }
+@@ -192,6 +194,7 @@ unsafe fn deliver_control(buf: &[u8], msg: &mut peios_socket_message) {
+                         msg.fd_count += 1;
+                     } else {
+                         libc::close(fd);
++                        msg.flags |= PEIOS_SOCKET_MSG_CTRUNCATED;
+                     }
+                 }
+             }
+@@ -321,7 +324,6 @@ pub unsafe extern "C" fn peios_socket_recv_message(
+     let delivered_control =
+         unsafe { core::slice::from_raw_parts(control.as_ptr().cast::<u8>(), delivered) };
+     deliver_control(delivered_control, msg);
+-    msg.flags = 0;
+     if hdr.msg_flags & libc::MSG_TRUNC != 0 {
+         msg.flags |= PEIOS_SOCKET_MSG_TRUNCATED;
+     }
+@@ -359,6 +361,29 @@ pub unsafe extern "C" fn peios_socket_peer_pidfd(sock_fd: c_int) -> c_int {
+ mod tests {
+     use super::*;
+ 
++    #[test]
++    fn excess_received_descriptors_are_closed_and_reported() {
++        unsafe {
++            let mut fds = [-1; 2];
++            assert_eq!(libc::pipe(fds.as_mut_ptr()), 0);
++            let control = build_send_control(-1, &fds);
++            let mut kept = -1;
++            let mut msg = peios_socket_message {
++                token_fd: -1,
++                fds: &mut kept,
++                fd_cap: 1,
++                fd_count: 0,
++                flags: 0,
++            };
++            deliver_control(&control, &mut msg);
++            assert_eq!(msg.fd_count, 1);
++            assert_eq!(kept, fds[0]);
++            assert_eq!(msg.flags, PEIOS_SOCKET_MSG_CTRUNCATED);
++            assert_eq!(libc::fcntl(fds[1], libc::F_GETFD), -1);
++            assert_eq!(libc::close(kept), 0);
++        }
++    }
++
+     #[test]
+     fn alignment_matches_the_kernel_macros() {
+         assert_eq!(cmsg_align(1), size_of::<usize>());
