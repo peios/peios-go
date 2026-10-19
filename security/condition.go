@@ -10,6 +10,8 @@ import (
 	"unicode/utf8"
 )
 
+const maxConditionDepth = 128
+
 type expression struct {
 	height   int
 	tag      byte
@@ -49,7 +51,7 @@ func (p *conditionParser) keyword(s string) bool {
 func (p *conditionParser) expr(min int) (*expression, error) {
 	p.depth++
 	defer func() { p.depth-- }()
-	if p.depth > 128 {
+	if p.depth > maxConditionDepth {
 		return nil, invalid("condition nesting")
 	}
 	p.space()
@@ -60,7 +62,7 @@ func (p *conditionParser) expr(min int) (*expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		left = &expression{tag: 0xa2, children: []*expression{v}}
+		left, e = conditionExpression(0xa2, v)
 	} else if p.eat("(") {
 		left, e = p.expr(0)
 		if e != nil {
@@ -76,7 +78,7 @@ func (p *conditionParser) expr(min int) (*expression, error) {
 				if err != nil {
 					return nil, err
 				}
-				left = &expression{tag: byte(op.value), children: []*expression{v}}
+				left, e = conditionExpression(byte(op.value), v)
 				break
 			}
 		}
@@ -99,8 +101,11 @@ func (p *conditionParser) expr(min int) (*expression, error) {
 			if err != nil {
 				return nil, err
 			}
-			left = &expression{tag: op, children: []*expression{v, r}}
+			left, e = conditionExpression(op, v, r)
 		}
+	}
+	if e != nil {
+		return nil, e
 	}
 	for {
 		p.space()
@@ -121,14 +126,31 @@ func (p *conditionParser) expr(min int) (*expression, error) {
 		if err != nil {
 			return nil, err
 		}
-		left = &expression{tag: tag, children: []*expression{left, right}}
+		left, e = conditionExpression(tag, left, right)
+		if e != nil {
+			return nil, e
+		}
 	}
 	return left, nil
 }
+
+// conditionExpression applies the same expression-height bound to parsed and
+// decoded operators. Operand nesting has its own recursion bound.
+func conditionExpression(tag byte, children ...*expression) (*expression, error) {
+	height := 1
+	for _, child := range children {
+		height = max(height, child.height+1)
+	}
+	if height > maxConditionDepth {
+		return nil, invalid("condition nesting")
+	}
+	return &expression{tag: tag, children: children, height: height}, nil
+}
+
 func (p *conditionParser) operand() (*expression, error) {
 	p.depth++
 	defer func() { p.depth-- }()
-	if p.depth > 128 {
+	if p.depth > maxConditionDepth {
 		return nil, invalid("operand nesting")
 	}
 	p.space()
@@ -341,7 +363,7 @@ func opArity(tag byte) int {
 	return 0
 }
 func decodeOperand(b []byte, depth int) (*expression, int, error) {
-	if len(b) == 0 || depth > 128 {
+	if len(b) == 0 || depth > maxConditionDepth {
 		return nil, 0, invalid("truncated operand")
 	}
 	v := &expression{tag: b[0]}
@@ -457,14 +479,9 @@ func FormatCondition(b []byte) (string, error) {
 				return "", invalid("condition stack underflow")
 			}
 			children := append([]*expression(nil), stack[len(stack)-n:]...)
-			height := 1
-			for _, c := range children {
-				if c.height+1 > height {
-					height = c.height + 1
-				}
-			}
-			if height > 128 {
-				return "", invalid("condition nesting")
+			node, err := conditionExpression(tag, children...)
+			if err != nil {
+				return "", err
 			}
 			stack = stack[:len(stack)-n]
 			for _, c := range children {
@@ -474,7 +491,7 @@ func FormatCondition(b []byte) (string, error) {
 					return "", invalid("condition operand type")
 				}
 			}
-			stack = append(stack, &expression{tag: tag, children: children, height: height})
+			stack = append(stack, node)
 			b = b[1:]
 		} else {
 			v, n, e := decodeOperand(b, 0)
