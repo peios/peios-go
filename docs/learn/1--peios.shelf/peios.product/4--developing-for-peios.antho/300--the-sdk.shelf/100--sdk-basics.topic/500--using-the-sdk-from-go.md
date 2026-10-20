@@ -62,3 +62,9 @@ when you apply a descriptor.
 
 Use `go doc github.com/peios/peios-go/security` for the package reference.
 The repository's `docs/building.md` describes SDK development and tests.
+
+## Audited access checks
+
+[Audit Contexts in Go](~peios/sdk-basics/audit-contexts-in-go) uses the
+maintained `access` package and explains how to handle denial separately from
+an unsuccessful check.
