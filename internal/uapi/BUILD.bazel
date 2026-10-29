@@ -1,4 +1,0 @@
-load("@rules_go//go:def.bzl", "go_library", "go_test")
-package(default_visibility = ["//visibility:public"])
-go_library(name = "go_default_library", srcs = ["zconst.go", "ztypes.go"], importpath = "github.com/peios/peios-go/internal/uapi", deps = [])
-filegroup(name = "sources", srcs = glob(["**"], exclude = ["target/**", "rust/target/**"]))
