@@ -1,12 +1,13 @@
-/build/*
-!/build/*.bzl
-!/build/*.bazel
-!/build/*.patch
-!/build/*.sha256
+# Output of the native VM harness.
+/build/
 /conformance/rust/target/
 
-/bazel-*
-/.ci-sdk/
 /docs/learn/dist/
 **/__pycache__/
 **/.ruff_cache/
+
+# pekit build output.
+/pekit-out/
+
+# Libraries pekit fetches for the pins in `pekit.lock`.
+/.gcsl/

@@ -19,7 +19,7 @@ func TestReferenceAPIs(t *testing.T) {
 		if os.Getenv("PEIOS_REQUIRE_CONFORMANCE") == "1" {
 			t.Fatal("both reference drivers are required")
 		}
-		t.Skip("run tools/conformance.sh to build both reference drivers")
+		t.Skip("run `pekit test conformance` to build both reference drivers")
 	}
 	cases := map[string][]string{
 		"sid":       {"SY", "S-1-0", "s-1-5-18", "S-1-0xabcdef123456-4294967295", "S-2-5-18", "S-1-5-4294967296", "S-1-281474976710656", "DA"},

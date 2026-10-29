@@ -1,0 +1,21 @@
+# The peios-go workspace: pekit builds it with the go library's pinned Go,
+# on the buildenv library's busybox environment, and its race tests and C
+# reference program with the gcc library's Bootlin C toolchains. The rust
+# library's pinned Rust builds the Rust reference program, and the python
+# library's pinned Python prepares the SDK's static libpeios.
+import Toolchain::* from "github.com/gcslib/buildenv"
+import Toolchain::* from "github.com/gcslib/gcc"
+import Toolchain::* from "github.com/gcslib/go"
+import Toolchain::* from "github.com/gcslib/python"
+import Toolchain::* from "github.com/gcslib/rust"
+import Toolchain from toolchain
+
+pekitconf = {
+    toolchains = [
+        Toolchain::C gcc_x86_64,
+        Toolchain::Go go_1_26,
+        Toolchain::Rust rust_1_98,
+        Toolchain::Python python_3_14,
+        Toolchain::BuildEnv busybox_x86_64,
+    ]
+}

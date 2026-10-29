@@ -1,2 +1,0 @@
-package(default_visibility = ["//visibility:public"])
-filegroup(name = "sources", srcs = ["BUILD.bazel"] + glob(["kernel/**"]) + ["//vendor/ppk:sources"])

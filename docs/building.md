@@ -1,70 +1,91 @@
 # Building and Testing peios-go
 
-Run commands from this repository. The `bazel` launcher verifies Bazel 8.4.2;
-Bazel pins the language toolchains and dependency graph. Development checks
-also use the host C compiler, Python 3.11 or later, and libclang where bindings
-are generated. These host dependencies are not a hermetic Peios toolchain.
+Use pekit to build and test the Go SDK. Pekit compiles each Go package on
+its own, so a change rebuilds only the packages it reaches. The supported
+development host is x86-64 Linux.
 
-## Host checks
+## Before you start
+
+You need pekit and Git. Everything else is pinned and fetched by pekit on
+the first build: Go 1.26.8, the Bootlin C toolchains, Rust 1.98.1, Python
+3.14, busybox, libclang, and the Peios SDK and peios-rs sources. The first
+build needs network access; later builds find what they need in pekit's
+store, and every step runs without network access in a sandbox that holds
+only its declared inputs.
+
+The build files use the gcslib libraries named in `workspace.gcsl` and the
+build files, and the libraries of the Peios SDK and peios-rs. `pekit lock`
+pins their commits in `pekit.lock`. The module has no Go dependencies, so
+it needs no `go.sum` and no module pins.
+
+Go runtime users need no C SDK. Portable codecs are pure Go, and the SDK
+builds without cgo.
+
+## Test
 
 ```sh
-./bazel test //...
-CGO_ENABLED=0 go test ./...
-go test -race ./...
+pekit test
 ```
 
-Native tests and differential reference tests are separate, explicit targets.
-Ordinary host tests skip Peios syscalls. Go runtime users need no C SDK.
+| Test | Check |
+|---|---|
+| `access`, `event`, `internal_native`, `msgpack`, `process`, `registry`, `registry_source`, `security`, `socket`, `token` | Each package's tests |
+| `conformance` | The contract corpus, compared with libpeios through its C and Rust interfaces |
+| `parity` | libpeios's public headers are the reviewed ones, and each public symbol maps to a Go declaration |
+| `vet` | `go vet` of every package |
+| `race` | Every package's tests with the race detector |
 
-## Reference SDK fixture
+Ordinary tests skip Peios system calls. A test whose inputs did not change
+is found in the store and not run again.
 
-Build a matched development C SDK from the consolidated repository:
+The `conformance` test runs with two reference programs, which pekit
+builds:
 
-```sh
-python3 tools/prepare-dev-sdk.py ../peios-sdk /absolute/path/to/sdk-fixture
-export PEIOS_SDK=/absolute/path/to/sdk-fixture
-```
+| Target | Program |
+|---|---|
+| `c_oracle` | `conformance/oracle.c`, linked with the SDK's static libpeios |
+| `rust_oracle` | `conformance/rust`, which uses peios-rs |
 
-The destination must be new. The helper builds the shared library and static
-archive with Bazel, copies the matching headers, and records file hashes,
-source revision, and checkout changes in `provenance.json`.
-
-For differential checks, set `PEIOS_RUST_SDK` to an absolute Rust SDK source
-checkout and run `tools/conformance.sh`. It records reference inputs and
-compares Go behavior with the public C and Rust interfaces. Go remains an
+Both are static musl programs. The SDK and peios-rs are taken at the
+commits `pekit.lock` pins; `conformance/rust/Cargo.lock` takes peios-rs at
+the same commit, which the rust library requires. Go remains an
 independent implementation with no runtime dependency on either reference.
+
+## Native tests
 
 Run native probes only in the disposable VM:
 
 ```sh
-export PEIOS_RUST_SDK=/absolute/path/to/peios-rs
 export PEIOS_TEST_KERNEL=/absolute/path/to/bzImage
 tools/native-vm.sh
 ```
 
-The harness requires an explicitly supplied Peios kernel image and QEMU.
-It boots a temporary initramfs without host mounts or networking. Its output
-records the kernel digest and reference source inputs; this is a targeted
-SDK check, not release-image or hardware qualification.
+The harness builds the native tests' program, the guest's init, and both
+reference programs with pekit. It boots them in a temporary initramfs
+without host mounts or networking, using an explicitly supplied Peios
+kernel image and QEMU. Its output under `build/native/` records the kernel
+digest and a copy of `pekit.lock`, which names the reference sources. This
+is a targeted SDK check, not release-image or hardware qualification.
 
-## Packages
+## Full check
 
 ```sh
-./bazel build //:packages
+python3 tools/prepare-style-tools.py "$HOME/.cache/peios-go-style"
+export PEIOS_STYLE_BIN="$HOME/.cache/peios-go-style/bin"
+tools/check
 ```
 
-The output under `bazel-bin/packages/store.store` contains canonical manifests,
-compressed content-addressed blobs, and a provenance index. The package holds
-SDK source, licenses, build definitions, and maintained documentation. It does
-not bundle third-party compiler caches or an installed compiler.
+`tools/check` checks owned source style, verifies the kernel inputs'
+provenance, regenerates the Go declarations to compare them, and then runs
+`pekit test`. Regenerating the declarations uses the host's Go and C
+compiler. GitHub's workflow runs the style checks alone; builds and tests
+run with pekit.
 
-The package is `dev.peios.peios-go-devel`, version
-`0.0.0-1`, architecture `noarch`. It installs source under
-`/usr/src/go/github.com/peios/peios-go`.
-The Go version denotes unreleased development content; it creates no Go release tag.
+## Not built with pekit yet
 
-Provenance marks these packages as development output, not release-qualified
-artifacts. Kernel VM tests and release-image qualification remain separate.
+The development source package, `dev.peios.peios-go-devel`, is not yet
+built with pekit. The packaging pipeline from the Bazel build is kept
+outside this repository until it is.
 
 ## Kernel input provenance
 
@@ -73,10 +94,8 @@ Run `python3 tools/update-kernel-inputs.py check` to verify that snapshot.
 Replace it only through the updater, then review generated declarations and
 rerun host, differential, and native checks. Do not format vendored inputs.
 
-## Style and documentation
+## Documentation
 
-Use `tools/prepare-style-tools.py` with an output directory outside the repository.
-Set `PEIOS_STYLE_BIN` to that directory, then run `tools/check`.
 Set `TRAIL` to the maintained Trail executable and run `tools/check-docs`.
 The optional `--context ../learn` check validates publication links
 against the complete merged documentation tree.

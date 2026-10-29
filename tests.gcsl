@@ -1,0 +1,121 @@
+# peios-go's tests: each package's tests, as `go test` builds and runs
+# them, the conformance corpus against the C and Rust reference programs,
+# the public C inventory's mapping to Go, `go vet`'s checks, and the tests again with the race detector, as `go
+# test -race` runs them. The native tests call a Peios kernel, so they run
+# only in the disposable guest `tools/native-vm.sh` boots.
+#
+# A test's own code runs in a hermetic step of its own, so what it plans,
+# builds or fetches is in its parameters' defaults.
+import fs
+import toolchain
+import Toolchain from toolchain
+import "github.com/gcslib/go"
+import "github.com/gcslib/python"
+import build * from "github.com/peios/peios-sdk"
+
+# Where the conformance tests find the reference programs.
+let C_ORACLE = "/work/oracle/c-oracle"
+
+let RUST_ORACLE = "/work/oracle/rust-oracle"
+
+# The module's top-level packages, whose declarations the inventory maps
+# symbols to.
+let GO_PACKAGES = ["access", "event", "file", "msgpack", "process", "registry", "security", "socket", "token"]
+
+# Runs each of `tests`, given `given` and `env`.
+fn ran(tests: List<go.GoTest>, given: List<{at: String, place: Dir | File}> = [], env: List<Entry<String>> = []) -> {} {
+    let each = for test in tests { = go.run_test(test, given = given, env = env) }
+}
+
+def test access(tests: List<go.GoTest> = go.tests(module(), "./access")) {
+    = ran(tests)
+}
+
+def test event(tests: List<go.GoTest> = go.tests(module(), "./event")) {
+    = ran(tests)
+}
+
+def test internal_native(tests: List<go.GoTest> = go.tests(module(), "./internal/native")) {
+    = ran(tests)
+}
+
+def test msgpack(tests: List<go.GoTest> = go.tests(module(), "./msgpack")) {
+    = ran(tests)
+}
+
+def test process(tests: List<go.GoTest> = go.tests(module(), "./process")) {
+    = ran(tests)
+}
+
+def test registry(tests: List<go.GoTest> = go.tests(module(), "./registry")) {
+    = ran(tests)
+}
+
+def test registry_source(tests: List<go.GoTest> = go.tests(module(), "./registry/source")) {
+    = ran(tests)
+}
+
+def test security(tests: List<go.GoTest> = go.tests(module(), "./security")) {
+    = ran(tests)
+}
+
+def test socket(tests: List<go.GoTest> = go.tests(module(), "./socket")) {
+    = ran(tests)
+}
+
+def test token(tests: List<go.GoTest> = go.tests(module(), "./token")) {
+    = ran(tests)
+}
+
+# The conformance corpus, with the C and Rust reference programs, which it
+# must be given: Go's results are compared with libpeios's through its C
+# and Rust interfaces. It reads the null-ACL vectors of `security`'s tests
+# beside its own.
+def test conformance(
+    tests: List<go.GoTest> = go.tests(module(), "./conformance"),
+    c_oracle: File = build c_oracle(),
+    rust_oracle: File = build rust_oracle(),
+    vectors: Dir = dir("security/testdata"),
+) {
+    = ran(
+        tests,
+        given = [
+            {at = C_ORACLE; place = c_oracle},
+            {at = RUST_ORACLE; place = rust_oracle},
+            {at = "/work/src/security/testdata"; place = vectors},
+        ],
+        env = [
+            {key = "PEIOS_REQUIRE_CONFORMANCE"; value = "1"},
+            {key = "PEIOS_C_ORACLE"; value = C_ORACLE},
+            {key = "PEIOS_RUST_ORACLE"; value = RUST_ORACLE},
+        ],
+    )
+}
+
+def test vet(checked: {} = go.vet(module())) {}
+
+def test race(checked: {} = go.race(module())) {}
+
+# The public C inventory: libpeios's public headers are those
+# `conformance/parity.json` reviewed, and every symbol they declare is
+# mapped to a Go declaration of the module's packages, as
+# `tools/check-parity.py` checks.
+def test parity(
+    headers: Dir = build libpeios_include(),
+    packages: List<{at: String, place: Dir | File}> = for each in GO_PACKAGES { = {at = "/work/{each}"; place = dir(each)} },
+    record: File = file("conformance/parity.json"),
+    script: File = file("tools/check-parity.py"),
+    c: toolchain.CToolchain = toolchain.get(Toolchain::C),
+    py: python.PythonToolchain = toolchain.get(Toolchain::Python),
+) {
+    let placed: List<{at: String, place: Dir | File | FileSet}> = [
+        {at = "/"; place = c.runtime},
+        {at = "/opt/python"; place = py.root},
+        {at = "/work/include"; place = headers},
+        {at = "/work/conformance/parity.json"; place = record},
+        {at = "/work/tools/check-parity.py"; place = script},
+        ...(for each in packages { = {at = each.at; place = each.place} }),
+    ]
+    let box = fs.compose(placed).sandbox(cwd = "/work", env = {PYTHONDONTWRITEBYTECODE = "1"})
+    let ran = box.exec("/opt/python/bin/python3", "/work/tools/check-parity.py", "--headers", "/work/include/peios")
+}
