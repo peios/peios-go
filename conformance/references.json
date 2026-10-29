@@ -1,7 +1,7 @@
 {
     "kernel": "fd763de6ef498489711a885e7d6f92162db5aff0",
     "c_sdk_minimum": "0.5.12",
-    "c_sdk": "explicit PEIOS_SDK input; exact files recorded by tools/conformance.sh",
-    "rust_sdk": "explicit PEIOS_RUST_SDK input; exact source recorded by tools/conformance.sh",
+    "c_sdk": "the Peios SDK commit pekit.lock pins; the C reference program links its static libpeios",
+    "rust_sdk": "the peios-rs commit pekit.lock and conformance/rust/Cargo.lock pin",
     "historical_baseline": "docs/archive/conformance-references.json"
 }

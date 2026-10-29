@@ -1,23 +1,10 @@
 #!/usr/bin/env python3
-"""Make a deterministic initramfs from explicit SDK probes and runtime libraries."""
+"""Make a deterministic initramfs from explicit, statically linked SDK probes."""
 
 import argparse
 import gzip
-import re
 import stat
-import subprocess
 from pathlib import Path
-
-
-def runtime_libraries(files: dict[str, Path]) -> None:
-    """Resolve development runtime dependencies from the selected executables."""
-    for executable in list(files.values()):
-        result = subprocess.run(
-            ["ldd", str(executable)], text=True, capture_output=True, check=False
-        )
-        for path in re.findall(r"(?:=>\s+)?(/\S+)", result.stdout):
-            if "libpeios.so" not in path:
-                files[path.lstrip("/")] = Path(path)
 
 
 def write_archive(files: dict[str, Path], output: Path) -> None:
@@ -46,7 +33,7 @@ def write_archive(files: dict[str, Path], output: Path) -> None:
 def main() -> None:
     """Build an isolated image without mounting any host directory in the guest."""
     parser = argparse.ArgumentParser(description=__doc__)
-    for name in ["init", "probe", "c-oracle", "rust-oracle", "library", "output"]:
+    for name in ["init", "probe", "c-oracle", "rust-oracle", "output"]:
         parser.add_argument("--" + name, type=Path, required=True)
     args = parser.parse_args()
     files = {
@@ -54,9 +41,7 @@ def main() -> None:
         "probe.test": args.probe,
         "c-oracle": args.c_oracle,
         "rust-oracle": args.rust_oracle,
-        "lib/libpeios.so.0": args.library,
     }
-    runtime_libraries(files)
     write_archive(files, args.output)
 
 

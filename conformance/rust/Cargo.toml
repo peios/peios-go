@@ -7,5 +7,5 @@ publish = false
 [workspace]
 
 [dependencies]
-peios = { path = "../../../peios-rs/peios" }
+peios = { git = "https://github.com/peios/peios-rs.git", rev = "4c9c0106550e3b7d8b4a98dfd0d7a5490fcf0116", features = ["static"] }
 libc = "=0.2.190"

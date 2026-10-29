@@ -1,0 +1,10 @@
+#!/bin/bash
+# The contributor check: owned source style and the kernel inputs'
+# provenance and generated declarations, then pekit's tests, which run
+# every package's tests, the differential conformance corpus, the public
+# inventory's parity, `go vet` and the race detector.
+set -euo pipefail
+cd "$(dirname "$0")/.."
+python3 tools/style-check.py
+python3 tools/check-uapi.py
+pekit test

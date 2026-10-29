@@ -1,0 +1,92 @@
+# The Go SDK, each package compiled on its own (see the go library's
+# `workspace`), pure Go, and the programs its differential and native tests
+# run: the C and Rust reference programs, which call libpeios through its
+# C and Rust interfaces, and the native test guest's init.
+import fs
+import toolchain
+import Toolchain from toolchain
+import "github.com/gcslib/clang"
+import gcc_x86_64_musl from "github.com/gcslib/gcc"
+import "github.com/gcslib/go"
+import "github.com/gcslib/rust"
+import "github.com/peios/peios-rs" as peios_rs
+import build * from "github.com/peios/peios-sdk"
+
+# The peios-go module. It has no dependencies, so the module files it
+# fetches are none: an empty `go.sum`, pinned by an empty list.
+def module() -> go.GoWorkspace {
+    = go.workspace(dir("."), nothing(), nothing(), ignore = ["pekit-out", "build"])
+}
+
+# An empty file, which names no module and pins none.
+#[hermetic]
+fn nothing() -> File {
+    let at = "{working_dir().path}/empty"
+    let wrote = fs.write(at, "")
+    = file(at)
+}
+
+# The C reference program, `conformance/oracle.c`: a static musl program
+# that links the SDK's static libpeios for musl, every warning an error.
+def build c_oracle() {
+    = oracle_linked(file("conformance/oracle.c"), build libpeios_static_musl(), build libpeios_include())
+}
+
+#[hermetic]
+fn oracle_linked(source: File, library: File, include: Dir, c: toolchain.CToolchain = gcc_x86_64_musl()) -> File {
+    let placed: List<{at: String, place: Dir | File | FileSet}> = [
+        {at = "/"; place = c.runtime},
+        {at = "/opt/cc"; place = c.root},
+        {at = "/work/oracle.c"; place = source},
+        {at = "/work/lib/libpeios.a"; place = library},
+        {at = "/work/include"; place = include},
+    ]
+    let box = fs.compose(placed).sandbox(cwd = "/out", env = {TMPDIR = "/out"})
+    let ran = box.exec(
+        "/opt/cc/{c.cc.path.strip_prefix("{c.root.path}/")}",
+        "-static-pie",
+        "-fPIE",
+        "-O2",
+        "-Wall",
+        "-Wextra",
+        "-Werror",
+        "-Wl,-z,relro",
+        "-Wl,-z,now",
+        "-I/work/include",
+        "/work/oracle.c",
+        "/work/lib/libpeios.a",
+        "-o",
+        "/out/c-oracle",
+    )
+    let made = working_dir().file("c-oracle")
+    fs.copy(box.file("/out/c-oracle").path, made.path)
+    = made
+}
+
+# The Rust reference program, `conformance/rust`: a static musl program
+# that uses peios-rs, at the commit `pekit.lock` pins its library at, with
+# libpeios's static archive for musl.
+def build rust_oracle() {
+    let target = "x86_64-unknown-linux-musl"
+    let crates = rust.workspace(
+        dir("conformance/rust"),
+        rust.vendored(file("conformance/rust/Cargo.lock")),
+        target = target,
+        rustflags = [...rust.default_rustflags(target), "-Clink-arg=-Wl,-z,relro", "-Clink-arg=-Wl,-z,now"],
+        crates = peios_rs.static_musl_crate_settings(),
+        libclang = [clang.libclang_18()],
+    )
+    = rust.bin(crates, "peios-go-rust-oracle")
+}
+
+# The native test guest's init, which runs the native tests as PID 1 and
+# powers the guest off.
+def build vm_init() {
+    = go.bin(module(), "./conformance/vm-init", name = "init")
+}
+
+# The native tests' program, which the guest runs: it calls a Peios kernel.
+def build native_tests() {
+    = go.tests(module(), "./conformance/native")[0].program
+}
+
