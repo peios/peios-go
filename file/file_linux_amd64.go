@@ -51,17 +51,39 @@ func GenericMapping() security.GenericMapping {
 	return security.GenericMapping{Read: 0x120089, Write: 0x120116, Execute: 0x1200a0, All: 0x1f01ff}
 }
 
+// OpenOptions are the parameters of a native open. Share is read only with
+// SpecifyShare in Flags. With LeaseManager set, the open is made under it and
+// LeaseKey, and does not break leases held under the same manager and key.
 type OpenOptions struct {
-	Access      Access
-	Disposition Disposition
-	Options     Options
-	Flags       Flags
-	Descriptor  []byte
+	Access       Access
+	Disposition  Disposition
+	Options      Options
+	Flags        Flags
+	Descriptor   []byte
+	Share        ShareAccess
+	LeaseManager *LeaseManager
+	LeaseKey     LeaseKey
 }
 
 // OpenAt returns an ordinary Go file and the kernel's opened/created status.
-// dirfd is borrowed and must remain open for this call; -100 means cwd.
+// dirfd is borrowed and must remain open for this call; -100 means cwd. A
+// failure the kernel names — a sharing violation, a delete-pending file —
+// is an *OpenError inside the returned *os.PathError.
 func OpenAt(dirfd int, path string, o OpenOptions) (*os.File, Status, error) {
+	if o.LeaseManager == nil {
+		return openAt(dirfd, path, o, 0)
+	}
+	var f *os.File
+	var status Status
+	e := native.WithFD(o.LeaseManager.File, func(mfd int) error {
+		var err error
+		f, status, err = openAt(dirfd, path, o, mfd)
+		return err
+	})
+	return f, status, e
+}
+
+func openAt(dirfd int, path string, o OpenOptions, leaseFD int) (*os.File, Status, error) {
 	if uint64(len(o.Descriptor)) > 0xffffffff {
 		return nil, 0, syscall.EINVAL
 	}
@@ -71,11 +93,16 @@ func OpenAt(dirfd int, path string, o OpenOptions) (*os.File, Status, error) {
 	if e != nil {
 		return nil, 0, e
 	}
-	how := uapi.Kacs_open_how{Desired_access: uint32(o.Access), Create_disposition: uint32(o.Disposition), Create_options: uint32(o.Options), Flags: uint32(o.Flags), Sd_ptr: uint64(pins.Bytes(o.Descriptor)), Sd_len: uint32(len(o.Descriptor))}
+	how := uapi.Kacs_open_how{Desired_access: uint32(o.Access), Create_disposition: uint32(o.Disposition), Create_options: uint32(o.Options), Flags: uint32(o.Flags), Sd_ptr: uint64(pins.Bytes(o.Descriptor)), Sd_len: uint32(len(o.Descriptor)), Share_access: uint32(o.Share)}
+	if o.LeaseManager != nil {
+		how.Flags |= uapi.KACS_OPEN_LEASE_KEY
+		how.Lease_fd = int32(leaseFD)
+		how.Lease_key = o.LeaseKey
+	}
 	var status uint32
 	fd, e := native.Call(uapi.SYS_KACS_OPEN, uintptr(dirfd), p, pins.Pointer(unsafe.Pointer(&how)), unsafe.Sizeof(how), pins.Pointer(unsafe.Pointer(&status)))
 	if e != nil {
-		return nil, 0, &os.PathError{Op: "peios.open", Path: path, Err: e}
+		return nil, 0, &os.PathError{Op: "peios.open", Path: path, Err: openError(e, status)}
 	}
 	return native.File(fd, path), Status(status), nil
 }
