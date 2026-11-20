@@ -68,10 +68,32 @@ type Kacs_group_entry struct {
 	Index  uint32
 	Enable uint32
 }
+type Kacs_lease_args struct {
+	Lease_key [16]uint8
+	State     uint32
+	Flags     uint32
+	_         uint64
+}
+type Kacs_lease_break struct {
+	Lease_key     [16]uint8
+	Dev           uint64
+	Ino           uint64
+	Current_state uint32
+	New_state     uint32
+	Reason        uint32
+	Epoch         uint32
+}
 type Kacs_link_tokens_args struct {
 	Elevated_fd      int32
 	Filtered_fd      int32
 	Logon_session_id uint64
+}
+type Kacs_lock_args struct {
+	Offset uint64
+	Length uint64
+	Op     uint32
+	Flags  uint32
+	Cookie uint64
 }
 type Kacs_mount_policy_args struct {
 	Policy          uint32
@@ -98,7 +120,16 @@ type Kacs_open_how struct {
 	Flags              uint32
 	Sd_ptr             uint64
 	Sd_len             uint32
+	Share_access       uint32
+	Lease_key          [16]uint8
+	Lease_fd           int32
 	_                  uint32
+}
+type Kacs_open_info struct {
+	Granted_access uint32
+	Share_access   uint32
+	Flags          uint32
+	_              uint32
 }
 type Kacs_priv_entry struct {
 	Luid       uint32
@@ -118,6 +149,35 @@ type Kacs_restrict_args struct {
 	Data_ptr          uint64
 	Result_fd         int32
 	_                 uint32
+}
+type Kacs_sattr struct {
+	Version         uint32
+	Valid           uint32
+	Attributes      uint32
+	Flags           uint32
+	Created_at_sec  int64
+	Created_at_nsec uint32
+	_               uint32
+}
+type Kacs_subject_request struct {
+	Version         uint32
+	Total_bytes     uint32
+	Flags           uint32
+	Known_groups    uint32
+	Desired_access  uint32
+	Mapping_read    uint32
+	Mapping_write   uint32
+	Mapping_execute uint32
+	Mapping_all     uint32
+	Object_index    uint32
+	Complete_claims uint32
+	Reserved        uint32
+	Sections        [26]uint32
+}
+type Kacs_subject_result struct {
+	Decision uint32
+	Granted  uint32
+	Missing  uint32
 }
 type Kmes_emit_entry struct {
 	Event_type     uint64
@@ -422,6 +482,11 @@ type Reg_query_values_batch_args struct {
 	Buf_ptr uint64
 	Txn_fd  int32
 	_       uint32
+}
+type Reg_read_transacted_args struct {
+	Args_ptr uint64
+	Txn_fd   int32
+	_        uint32
 }
 type Reg_restore_args struct {
 	Input_fd int32
