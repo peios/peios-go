@@ -28,25 +28,33 @@ type KeyInfo struct {
 	Generation                                                                 uint64
 }
 
-func (k *Key) Info() (out KeyInfo, e error) {
+func (k *Key) Info() (KeyInfo, error) { return k.InfoTransacted(nil) }
+
+// InfoTransacted reads the key's metadata within a read transaction from
+// BeginRead, or live with a nil tx.
+func (k *Key) InfoTransacted(tx *Transaction) (out KeyInfo, e error) {
 	e = native.WithFD(k, func(fd int) error {
-		b, err := native.Buffer(func(b []byte) (uint32, error) {
-			var p native.Pins
-			defer p.Unpin()
-			a := uapi.Reg_query_key_info_args{Name_len: uint32(len(b)), Name_ptr: uint64(p.Bytes(b))}
-			err := native.Ioctl(fd, uapi.REG_IOC_QUERY_KEY_INFO, unsafe.Pointer(&a))
-			if err == nil {
-				out = KeyInfo{LastWriteTime: a.Last_write_time, Subkeys: a.Subkey_count, Values: a.Value_count, MaxSubkeyName: a.Max_subkey_name_len, MaxValueName: a.Max_value_name_len, MaxValueData: a.Max_value_data_size, DescriptorSize: a.Sd_size, Volatile: a.Volatile_key != 0, Symlink: a.Symlink != 0, Generation: a.Hive_generation}
-			}
-			return a.Name_len, err
-		})
-		if err != nil {
-			return err
-		}
-		out.Name = string(b)
-		return nil
+		return withTxn(tx, func(txfd int) error { var err error; out, err = keyInfo(fd, txfd); return err })
 	})
 	return
+}
+
+func keyInfo(fd, txfd int) (out KeyInfo, e error) {
+	b, err := native.Buffer(func(b []byte) (uint32, error) {
+		var p native.Pins
+		defer p.Unpin()
+		a := uapi.Reg_query_key_info_args{Name_len: uint32(len(b)), Name_ptr: uint64(p.Bytes(b))}
+		err := readIoctl(fd, txfd, uapi.REG_IOC_QUERY_KEY_INFO, uapi.REG_IOC_QUERY_KEY_INFO_TRANSACTED, unsafe.Pointer(&a), &p)
+		if err == nil {
+			out = KeyInfo{LastWriteTime: a.Last_write_time, Subkeys: a.Subkey_count, Values: a.Value_count, MaxSubkeyName: a.Max_subkey_name_len, MaxValueName: a.Max_value_name_len, MaxValueData: a.Max_value_data_size, DescriptorSize: a.Sd_size, Volatile: a.Volatile_key != 0, Symlink: a.Symlink != 0, Generation: a.Hive_generation}
+		}
+		return a.Name_len, err
+	})
+	if err != nil {
+		return out, err
+	}
+	out.Name = string(b)
+	return out, nil
 }
 func (k *Key) Subkey(index uint32, tx *Transaction) (out KeyInfo, e error) {
 	e = native.WithFD(k, func(fd int) error {

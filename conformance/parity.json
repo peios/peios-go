@@ -4,9 +4,9 @@
         "file.h": "875a2cf8a6fa1274c82418e33ab984a86cf0a0b98a0dca8127854a8509a6ba7a",
         "msgpack.h": "c44b87d99b6864966d44cf446df3f8025e974b2feec511824fa740c4558c149e",
         "token.h": "451ebcdebf3b4e90b7eff923a9cbbac39b5005a2f1761eb527f161b657751594",
-        "access.h": "56f67f88f1486d0808a64033bdd15dee06feea263873c3d3f301bd1c542bde03",
+        "access.h": "1dcef8f46355df56a226815b389d7e797ee68d76fb0afa058cb755e658267734",
         "security.h": "c550a710b6bf4bc01ff83c95c147190b655ba41cf97c8124af27cc4e2ea6d46b",
-        "registry.h": "3179e406c96a1a134835e08f4f63ecebff84ff31a03703be3e3c9e3cb91e1d67",
+        "registry.h": "a00fdcc45c47db4129754bc6c7a926e38370c9f9eea6b158433be2ae3831cec3",
         "process.h": "18e085872b7f02cba49148971206be7174c74922c177489eef3b8e446d9a4ddc",
         "event.h": "4cf97453c2cb09c3b7c39f4cda52b2dedd9b313eb64d4bf4b8be95a1c04e57ab"
     },
@@ -18,6 +18,16 @@
         },
         "peios_access_check_list": {
             "go": "access.CheckList",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_access_check_subject": {
+            "go": "access.CheckSubject",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "access.h"
+        },
+        "peios_access_check_subject_ex": {
+            "go": "access.CheckSubjectEx",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "access.h"
         },
@@ -541,6 +551,11 @@
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "registry.h"
         },
+        "peios_reg_begin_read_transaction": {
+            "go": "registry.BeginRead",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
         "peios_reg_begin_transaction": {
             "go": "registry.Begin",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
@@ -591,6 +606,11 @@
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "registry.h"
         },
+        "peios_reg_get_security_transacted": {
+            "go": "registry.Key.GetDescriptorTransacted",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
         "peios_reg_hide_key": {
             "go": "registry.Key.Hide",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
@@ -606,8 +626,18 @@
             "note": "registry.Open for absolute paths, Key.Open for relative paths; TakeFile adopts transferred key fds.",
             "header": "registry.h"
         },
+        "peios_reg_open_key_transacted": {
+            "go": "registry.Key.OpenTransacted",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
         "peios_reg_query_key_info": {
             "go": "registry.Key.Info",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "registry.h"
+        },
+        "peios_reg_query_key_info_transacted": {
+            "go": "registry.Key.InfoTransacted",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "registry.h"
         },

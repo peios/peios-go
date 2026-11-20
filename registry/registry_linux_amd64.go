@@ -285,17 +285,25 @@ func (k *Key) ReadNotifications(buf []byte) (int, error) {
 	}
 	return k.f.Read(buf)
 }
-func (k *Key) GetDescriptor(info security.SecurityInformation) (out []byte, e error) {
+func (k *Key) GetDescriptor(info security.SecurityInformation) ([]byte, error) {
+	return k.GetDescriptorTransacted(info, nil)
+}
+
+// GetDescriptorTransacted reads the key's descriptor within a read
+// transaction from BeginRead, or live with a nil tx.
+func (k *Key) GetDescriptorTransacted(info security.SecurityInformation, tx *Transaction) (out []byte, e error) {
 	e = native.WithFD(k, func(fd int) error {
-		var err error
-		out, err = native.Buffer(func(b []byte) (uint32, error) {
-			var p native.Pins
-			defer p.Unpin()
-			a := uapi.Reg_get_security_args{Security_info: uint32(info), Sd_len: uint32(len(b)), Sd_ptr: uint64(p.Bytes(b))}
-			e := native.Ioctl(fd, uapi.REG_IOC_GET_SECURITY, unsafe.Pointer(&a))
-			return a.Sd_len, e
+		return withTxn(tx, func(txfd int) error {
+			var err error
+			out, err = native.Buffer(func(b []byte) (uint32, error) {
+				var p native.Pins
+				defer p.Unpin()
+				a := uapi.Reg_get_security_args{Security_info: uint32(info), Sd_len: uint32(len(b)), Sd_ptr: uint64(p.Bytes(b))}
+				e := readIoctl(fd, txfd, uapi.REG_IOC_GET_SECURITY, uapi.REG_IOC_GET_SECURITY_TRANSACTED, unsafe.Pointer(&a), &p)
+				return a.Sd_len, e
+			})
+			return err
 		})
-		return err
 	})
 	return
 }
