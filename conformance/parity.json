@@ -1,7 +1,7 @@
 {
     "scope": "All functions and exported mapping objects in libpeios/include/peios/*.h; functional Go equivalents, not C ABI compatibility. Headers pinned by SHA-256.",
     "headers_sha256": {
-        "file.h": "550fe7c3e954a37a6b614fde012192b6e2f0f3d440f53bd0fb6aba4d8c8d6805",
+        "file.h": "875a2cf8a6fa1274c82418e33ab984a86cf0a0b98a0dca8127854a8509a6ba7a",
         "msgpack.h": "c44b87d99b6864966d44cf446df3f8025e974b2feec511824fa740c4558c149e",
         "token.h": "451ebcdebf3b4e90b7eff923a9cbbac39b5005a2f1761eb527f161b657751594",
         "access.h": "56f67f88f1486d0808a64033bdd15dee06feea263873c3d3f301bd1c542bde03",
@@ -246,8 +246,23 @@
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "event.h"
         },
+        "peios_fd_creation_time": {
+            "go": "file.CreationTime",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_fd_get_sattr": {
+            "go": "file.GetSpecialAttributes",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
         "peios_fd_get_sd": {
             "go": "file.GetDescriptor",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_fd_set_sattr": {
+            "go": "file.SetSpecialAttributes",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
@@ -256,8 +271,18 @@
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
+        "peios_file_creation_time": {
+            "go": "file.CreationTimeAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
         "peios_file_generic_mapping": {
             "go": "file.GenericMapping",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_get_sattr": {
+            "go": "file.GetSpecialAttributesAt",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
@@ -266,13 +291,53 @@
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
+        "peios_file_lease": {
+            "go": "file.RequestLease",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_lock": {
+            "go": "file.Lock",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
         "peios_file_open": {
             "go": "file.OpenAt",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
+        "peios_file_query_open": {
+            "go": "file.Query",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_rename": {
+            "go": "file.Rename",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_set_disposition": {
+            "go": "file.SetDeleteDisposition",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_file_set_sattr": {
+            "go": "file.SetSpecialAttributesAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
         "peios_file_set_sd": {
             "go": "file.SetDescriptorAt",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_lease_manager_create": {
+            "go": "file.NewLeaseManager",
+            "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
+            "header": "file.h"
+        },
+        "peios_lease_manager_read": {
+            "go": "file.LeaseManager.ReadBreaks",
             "note": "Go-owned values and errors replace C output pointers and allocation lifecycles.",
             "header": "file.h"
         },
